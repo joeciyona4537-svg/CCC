@@ -274,37 +274,6 @@ canvas#c-water { display: block; width: 100%; height: 120px; }
 }
 .safe-meter-txt { font-size: 11.5px; font-weight: 600; color: var(--green); }
 
-/* ── VISUAL WATER BREAKDOWN: WHERE IT GOES ─────────────── */
-.breakdown-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px 26px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  margin-bottom: 24px;
-}
-
-/* Segmented visual progress bar */
-.seg-bar-track {
-  height: 18px; width: 100%; border-radius: 6px;
-  display: flex; overflow: hidden; margin: 16px 0 14px;
-  background: rgba(0,0,0,0.04);
-}
-.seg-sanitary { width: 76.2%; background: #38bdf8; transition: width 0.5s; }
-.seg-process  { width: 23.8%; background: #22c55e; transition: width 0.5s; }
-
-.seg-cards {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-}
-.seg-card {
-  border-radius: 8px; padding: 14px 16px;
-  border: 1px solid var(--border);
-  background: var(--bg-subtle);
-}
-.seg-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.seg-card-title { font-size: 13.5px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
-.seg-card-num { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text-dark); }
-.seg-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
 
 /* ── 2 QUESTIONS THAT MATTER: GROUNDWATER & SEWER ──────── */
 .two-col-grid {
@@ -375,7 +344,6 @@ footer {
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
   .two-col-grid { grid-template-columns: 1fr; }
-  .seg-cards { grid-template-columns: 1fr; }
   .gw-blocks { grid-template-columns: 1fr; }
   .sewer-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; align-items: flex-start; }
@@ -518,46 +486,6 @@ footer {
     </div>
   </div>
 
-  <!-- WHERE THE WATER GOES: VISUAL ALLOCATION BAR -->
-  <div class="breakdown-panel">
-    <div class="panel-head">
-      <div>
-        <div class="panel-title">Where Does the 1.51 m³ per Car Actually Go?</div>
-        <div class="panel-sub">Audited breakdown: Most factory water is human drinking water, washrooms, and evaporative cooling.</div>
-      </div>
-      <div style="text-align: right;">
-        <span style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text-dark);">Total: 0.30 Mio m³ / year</span>
-      </div>
-    </div>
-
-    <!-- Segmented Visual Bar -->
-    <div class="seg-bar-track">
-      <div class="seg-sanitary" title="76% Human Drinking & Sanitary"></div>
-      <div class="seg-process" title="24% Factory Manufacturing"></div>
-    </div>
-
-    <div class="seg-cards">
-      <div class="seg-card" style="border-left: 3px solid #38bdf8;">
-        <div class="seg-card-top">
-          <div class="seg-card-title">
-            <span style="color: #0284c7;">●</span> 1. Worker Sanitary &amp; Cooling
-          </div>
-          <div class="seg-card-num">1.15 m³ <span style="font-size: 12px; color: var(--text-dim); font-weight: 500;">(76%)</span></div>
-        </div>
-        <div class="seg-card-desc">Drinking water, cafeterias, washrooms for 11,000 employees, and evaporative cooling towers.</div>
-      </div>
-
-      <div class="seg-card" style="border-left: 3px solid #22c55e;">
-        <div class="seg-card-top">
-          <div class="seg-card-title">
-            <span style="color: #16a34a;">●</span> 2. Manufacturing Process
-          </div>
-          <div class="seg-card-num" style="color: var(--green);">0.36 m³ <span style="font-size: 12px; color: var(--text-dim); font-weight: 500;">(24%)</span></div>
-        </div>
-        <div class="seg-card-desc">Paint shop, casting, and battery pack assembly — 100% recycled internally in a closed loop.</div>
-      </div>
-    </div>
-  </div>
 
   <!-- 2 VISUAL PROOFS: GROUNDWATER STUDY & SEWER SAFETY -->
   <div class="two-col-grid">
