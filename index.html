@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Live Environmental Telemetry · Gigafactory Berlin-Brandenburg | Tesla</title>
+<title>Gigafactory Berlin · Live Environmental Report | Tesla</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -16,12 +16,11 @@
   --border: rgba(255,255,255,0.08);
   --red:    #E82127;
   --white:  #ffffff;
-  --dim:    rgba(255,255,255,0.55);
-  --muted:  rgba(255,255,255,0.30);
+  --dim:    rgba(255,255,255,0.60);
+  --muted:  rgba(255,255,255,0.35);
   --green:  #4ade80;
   --blue:   #38bdf8;
   --amber:  #fbbf24;
-  --purple: #a855f7;
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Inter', -apple-system, sans-serif;
 }
@@ -33,12 +32,13 @@ body {
   color: var(--white);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  line-height: 1.5;
 }
 
 /* ── NAV ───────────────────────────────────────────────── */
 nav {
   position: sticky; top: 0; left: 0; right: 0;
-  height: 50px;
+  height: 52px;
   background: rgba(23,26,32,0.96);
   backdrop-filter: blur(16px);
   display: flex; align-items: center; justify-content: space-between;
@@ -46,212 +46,271 @@ nav {
   border-bottom: 1px solid var(--border);
   z-index: 100;
 }
-.nav-logo svg { fill: #fff; display: block; }
-.nav-titles { display: flex; align-items: center; gap: 12px; }
-.nav-title { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-brand svg { fill: #fff; display: block; }
+.nav-title { font-size: 13px; font-weight: 600; color: #fff; }
 .nav-sub { font-size: 11px; color: var(--muted); }
 
-.nav-right { display: flex; align-items: center; gap: 18px; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
 .live-pill {
   display: flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--green);
+  padding: 4px 10px; border-radius: 99px;
+  background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+  font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 0.04em;
 }
 .live-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%; background: var(--green);
-  animation: blink 2s ease-in-out infinite;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: pulse 2s infinite ease-in-out;
 }
-@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.7)} }
-.nav-clock { font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: 0.03em; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.7)} }
+.nav-clock { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 
 /* ── WRAPPER ───────────────────────────────────────────── */
-.dashboard-wrap {
-  max-width: 1240px;
+.wrap {
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 24px 28px 40px;
+  padding: 24px 24px 48px;
 }
 
-/* ── HEADER SUMMARY BAR ────────────────────────────────── */
-.header-bar {
+/* ── TOP HERO BANNER ───────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(180deg, rgba(35,40,51,0.6) 0%, rgba(31,35,43,0.3) 100%);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 20px; flex-wrap: wrap; gap: 16px;
+  flex-wrap: wrap; gap: 16px;
 }
-.header-bar-left .eyebrow {
-  font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 4px;
+.hero-banner-left .eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
 }
-.header-bar-left h1 {
-  font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;
+.hero-banner-left h1 {
+  font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2;
 }
-.header-bar-right {
-  font-size: 11px; color: var(--muted); text-align: right; line-height: 1.6;
+.hero-banner-left p {
+  font-size: 13px; color: var(--dim); margin-top: 4px;
 }
+.hero-banner-right {
+  display: flex; gap: 12px;
+}
+.status-badge {
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.25);
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-align: center;
+}
+.status-badge-val { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--green); }
+.status-badge-lbl { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
 
-/* ── 4 FOCUS KPIS ──────────────────────────────────────── */
-.kpi-row {
+/* ── 3 CITIZEN ANSWER CARDS ────────────────────────────── */
+.cards-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
 }
-.kpi-card {
+.card {
   background: var(--mid);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px 20px;
+  border-radius: 10px;
+  padding: 22px 24px;
   position: relative;
-  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-.kpi-card::before {
+.card::before {
   content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
+  top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 10px 10px 0 0;
 }
-.kpi-card.c-blue::before   { background: var(--blue); }
-.kpi-card.c-green::before  { background: var(--green); }
-.kpi-card.c-amber::before  { background: var(--amber); }
-.kpi-card.c-purple::before { background: var(--purple); }
+.card.c-blue::before  { background: var(--blue); }
+.card.c-green::before { background: var(--green); }
+.card.c-amber::before { background: var(--amber); }
 
-.kpi-label { font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; margin-bottom: 6px; }
-.kpi-val { font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.kpi-val.c-blue   { color: var(--blue); }
-.kpi-val.c-green  { color: var(--green); }
-.kpi-val.c-amber  { color: var(--amber); }
-.kpi-val.c-purple { color: var(--purple); }
-.kpi-desc { font-size: 11px; color: var(--dim); margin-top: 5px; line-height: 1.4; }
-
-/* ── GRID ──────────────────────────────────────────────── */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+.card-question {
+  font-size: 12px; font-weight: 600; color: var(--dim);
+  margin-bottom: 14px; line-height: 1.4;
 }
+.card-big {
+  font-family: var(--mono); font-size: 42px; font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px;
+}
+.card.c-blue .card-big  { color: var(--blue); }
+.card.c-green .card-big { color: var(--green); }
+.card.c-amber .card-big { color: var(--amber); }
 
+.card-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+.card-desc  { font-size: 12px; color: var(--dim); line-height: 1.55; }
+.card-tag   {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+}
+.card.c-blue .card-tag  { color: var(--blue); }
+.card.c-green .card-tag { color: var(--green); }
+.card.c-amber .card-tag { color: var(--amber); }
+
+/* ── CHART SECTIONS ────────────────────────────────────── */
 .panel {
   background: var(--mid);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 22px 24px;
-  overflow: hidden;
+  margin-bottom: 20px;
 }
-.panel.full-width { grid-column: span 2; }
-
-.panel-header {
+.panel-head {
   display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 16px; gap: 14px;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
 }
-.panel-title { font-size: 13.5px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
-.panel-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.panel-head-title { font-size: 15px; font-weight: 600; color: #fff; }
+.panel-head-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-.panel-stat { text-align: right; }
-.panel-stat-val { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.panel-stat-lbl { font-size: 10.5px; color: var(--muted); margin-top: 3px; }
+.panel-stat-num {
+  font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--blue); line-height: 1;
+}
+.panel-stat-sub { font-size: 11px; color: var(--muted); margin-top: 3px; text-align: right; }
 
 canvas { display: block; width: 100%; }
 
-.axis-row {
+.chart-axis {
   display: flex; justify-content: space-between;
-  font-size: 10px; color: var(--muted); font-family: var(--mono);
-  margin-top: 8px; letter-spacing: 0.02em;
+  font-size: 10.5px; color: var(--muted); font-family: var(--mono);
+  margin-top: 8px;
 }
 
-.legend-row {
+.chart-legend {
   display: flex; align-items: center; gap: 20px;
-  margin-top: 12px; flex-wrap: wrap; font-size: 11px; color: var(--dim);
+  margin-top: 14px; flex-wrap: wrap; font-size: 11.5px; color: var(--dim);
 }
-.legend-item { display: flex; align-items: center; gap: 7px; }
-.legend-line { width: 18px; height: 2px; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-line { width: 20px; height: 2px; }
 
-/* ── WATER PER CAR MINI-BOXES ───────────────────────────── */
-.detail-grid {
+/* ── 2 COLUMN ROW: WATER PER CAR + NOISE ───────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* Water breakdown */
+.breakdown-row {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 10px; margin-top: 14px;
 }
-.detail-box {
+.breakdown-box {
   background: rgba(255,255,255,0.025);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px 14px;
-}
-.detail-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.detail-val { font-family: var(--mono); font-size: 16px; font-weight: 700; margin-top: 3px; color: #fff; }
-.detail-sub { font-size: 10.5px; color: var(--dim); margin-top: 2px; }
-
-/* ── NOISE SECTION ─────────────────────────────────────── */
-.noise-layout {
-  display: flex; gap: 18px; align-items: center;
-  margin-top: 4px;
-}
-.radar-box {
-  flex-shrink: 0; width: 190px; height: 190px;
-  position: relative;
-}
-.noise-timeline-box {
-  flex: 1; min-width: 0;
-}
-.noise-station-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; margin-top: 10px;
-}
-.station-pill {
-  background: rgba(255,255,255,0.025);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 12px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.station-name { font-size: 10.5px; color: var(--muted); }
-.station-val  { font-family: var(--mono); font-size: 13px; font-weight: 700; color: #fff; }
-
-/* ── GROUNDWATER & CIVIC FOOTER STRIP ───────────────────── */
-.gw-strip {
-  margin-top: 16px;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.gw-card {
-  background: var(--mid);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px 18px;
+  padding: 12px 14px;
 }
-.gw-lbl  { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-.gw-num  { font-family: var(--mono); font-size: 22px; font-weight: 700; line-height: 1; }
-.gw-desc { font-size: 10.5px; color: var(--dim); margin-top: 4px; line-height: 1.4; }
+.breakdown-lbl { font-size: 11px; color: var(--muted); }
+.breakdown-val { font-family: var(--mono); font-size: 18px; font-weight: 700; color: #fff; margin-top: 3px; }
+.breakdown-desc { font-size: 11px; color: var(--dim); margin-top: 3px; line-height: 1.4; }
 
-/* ── COMPLIANCE BADGE STRIP ────────────────────────────── */
-.compliance-bar {
-  margin-top: 16px;
+/* ── SIMPLE NOISE LEVEL METER ──────────────────────────── */
+.sound-scale-wrap {
+  margin-top: 8px;
+  padding: 14px 16px;
   background: rgba(255,255,255,0.02);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px; font-size: 11px; color: var(--dim);
 }
-.comp-item { display: flex; align-items: center; gap: 8px; }
-.comp-item strong { color: #fff; font-weight: 600; }
+.sound-scale-title {
+  font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
+}
+.sound-scale-bar {
+  position: relative;
+  height: 8px;
+  background: linear-gradient(90deg, #4ade80 0%, #4ade80 60%, #fbbf24 75%, #f87171 100%);
+  border-radius: 99px;
+  margin: 18px 0 24px;
+}
+.sound-marker {
+  position: absolute; top: -6px;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center;
+}
+.sound-pin {
+  width: 20px; height: 20px; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 6px rgba(255,255,255,0.4);
+  border: 3px solid var(--dark);
+}
+.sound-pin-label {
+  position: absolute; bottom: -22px;
+  font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap;
+}
 
-/* ── FOOTER ────────────────────────────────────────────── */
-footer {
-  margin-top: 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 11px; color: var(--muted); flex-wrap: wrap; gap: 14px;
-  border-top: 1px solid var(--border); padding-top: 20px;
+.sound-scale-labels {
+  display: flex; justify-content: space-between;
+  font-size: 10.5px; color: var(--muted); margin-top: 4px;
 }
-.foot-links { display: flex; gap: 20px; list-style: none; }
+
+/* 4 Neighboring Stations */
+.stations-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-top: 14px;
+}
+.station-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.station-left .station-loc { font-size: 11.5px; font-weight: 600; color: #fff; }
+.station-left .station-status { font-size: 10.5px; color: var(--green); margin-top: 1px; }
+.station-val { font-family: var(--mono); font-size: 14px; font-weight: 700; color: #fff; }
+
+/* ── GROUNDWATER FACT BOX ──────────────────────────────── */
+.gw-panel {
+  background: var(--mid);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 26px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: center;
+  margin-bottom: 20px;
+}
+.gw-left .gw-lbl {
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;
+}
+.gw-left .gw-big {
+  font-family: var(--mono); font-size: 48px; font-weight: 700; color: var(--green);
+  line-height: 1; margin-bottom: 8px;
+}
+.gw-left .gw-headline { font-size: 14px; font-weight: 600; color: #fff; }
+.gw-left .gw-source { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+.gw-right p {
+  font-size: 12.5px; color: var(--dim); line-height: 1.6; margin-bottom: 8px;
+}
+.gw-right p strong { color: #fff; }
+
+/* ── FOOTER & TRANSPARENCY PROMISE ─────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; font-size: 11px; color: var(--muted);
+}
+.foot-note { max-width: 600px; line-height: 1.6; }
+.foot-links { display: flex; gap: 18px; list-style: none; }
 .foot-links a { color: var(--muted); text-decoration: none; }
 .foot-links a:hover { color: var(--dim); }
 
-@media (max-width: 900px) {
-  .dashboard-wrap { padding: 16px 16px 32px; }
-  .kpi-row { grid-template-columns: 1fr 1fr; }
-  .main-grid { grid-template-columns: 1fr; }
-  .panel.full-width { grid-column: span 1; }
-  .noise-layout { flex-direction: column; align-items: stretch; }
-  .radar-box { margin: 0 auto; }
-  .gw-strip { grid-template-columns: 1fr 1fr; }
-  footer { flex-direction: column; align-items: flex-start; }
+@media (max-width: 860px) {
+  .cards-row { grid-template-columns: 1fr; }
+  .two-col   { grid-template-columns: 1fr; }
+  .gw-panel  { grid-template-columns: 1fr; gap: 16px; }
+  .hero-banner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -259,231 +318,260 @@ footer {
 
 <!-- TOP NAV -->
 <nav>
-  <div class="nav-titles">
-    <a href="#" class="nav-logo" aria-label="Tesla">
-      <svg width="16" height="24" viewBox="0 0 342 512">
-        <path d="M0 68.4L171 512 342 68.4c-45.9 10.2-96.3 15.3-171 15.3S45.9 78.6 0 68.4zM171 83.7L70.9 371.3 171 85.7l100.1 285.6L171 83.7zM0 0h342S298.3 54.2 171 54.2 0 0 0 0z"/>
-      </svg>
-    </a>
+  <div class="nav-brand">
+    <svg width="16" height="24" viewBox="0 0 342 512">
+      <path d="M0 68.4L171 512 342 68.4c-45.9 10.2-96.3 15.3-171 15.3S45.9 78.6 0 68.4zM171 83.7L70.9 371.3 171 85.7l100.1 285.6L171 83.7zM0 0h342S298.3 54.2 171 54.2 0 0 0 0z"/>
+    </svg>
     <div>
       <span class="nav-title">Gigafactory Berlin-Brandenburg</span>
-      <span class="nav-sub">· Public Environmental Telemetry</span>
+      <span class="nav-sub">· Public Environmental Report</span>
     </div>
   </div>
   <div class="nav-right">
-    <div class="live-pill"><div class="live-dot"></div>Live Stream</div>
+    <div class="live-pill"><div class="live-dot"></div>Live Telemetry</div>
     <div class="nav-clock" id="nav-clock">— CET</div>
   </div>
 </nav>
 
-<div class="dashboard-wrap">
+<div class="wrap">
 
-  <!-- HEADER BAR -->
-  <div class="header-bar">
-    <div class="header-bar-left">
-      <div class="eyebrow">Environmental Telemetry · Grünheide, Brandenburg</div>
-      <h1>24/7 Live Monitoring &amp; Compliance</h1>
+  <!-- TOP HERO STATUS -->
+  <div class="hero-banner">
+    <div class="hero-banner-left">
+      <div class="eyebrow">✔ All Environmental Standards Met Today</div>
+      <h1>Simple Facts. Real Data. Every 5 Minutes.</h1>
+      <p>Continuous sensor feed open to every resident of Grünheide and Brandenburg.</p>
     </div>
-    <div class="header-bar-right">
-      5-minute continuous sensor readings<br>
-      Independent watchdog: Bürgerinitiative Grünheide selection<br>
-      Sources: WSE Erkner · LfU Brandenburg · EMAS 2025 · TA Lärm
+    <div class="hero-banner-right">
+      <div class="status-badge">
+        <div class="status-badge-val" id="streak-num">342 Days</div>
+        <div class="status-badge-lbl">100% Compliant</div>
+      </div>
+      <div class="status-badge">
+        <div class="status-badge-val">0</div>
+        <div class="status-badge-lbl">Violations</div>
+      </div>
     </div>
   </div>
 
-  <!-- 4 FOCUS KPIS -->
-  <div class="kpi-row">
-    <div class="kpi-card c-blue">
-      <div class="kpi-label">WSE Draw · Today</div>
-      <div class="kpi-val c-blue" id="kpi-draw">822 m³</div>
-      <div class="kpi-desc">≈ 3% of WSE daily capacity · 0 own wells</div>
+  <!-- 3 CITIZEN ANSWER CARDS -->
+  <div class="cards-row">
+
+    <!-- 1. WATER SOURCE -->
+    <div class="card c-blue">
+      <div>
+        <div class="card-question">1. Are they draining our local water?</div>
+        <div class="card-big">0</div>
+        <div class="card-title">Private Wells</div>
+        <div class="card-desc">
+          Tesla takes <strong>zero water from private wells</strong>. All water comes through the public utility tap (WSE), representing only ~3% of the community's water pumping.
+        </div>
+      </div>
+      <div>
+        <span class="card-tag">≈ 3% of Public Supply · 0 Own Wells</span>
+      </div>
     </div>
-    <div class="kpi-card c-green">
-      <div class="kpi-label">Process Water Recycling</div>
-      <div class="kpi-val c-green">100%</div>
-      <div class="kpi-desc">Zero factory process discharge to sewers</div>
+
+    <!-- 2. RECYCLING -->
+    <div class="card c-green">
+      <div>
+        <div class="card-question">2. Is dirty factory water going into sewers?</div>
+        <div class="card-big">100%</div>
+        <div class="card-title">Process Water Recycled</div>
+        <div class="card-desc">
+          <strong>Zero manufacturing wastewater</strong> enters the community sewer system. 100% of water used to make cars is cleaned and recirculated in a closed loop inside the plant.
+        </div>
+      </div>
+      <div>
+        <span class="card-tag">Zero Factory Discharge · Closed Loop</span>
+      </div>
     </div>
-    <div class="kpi-card c-amber">
-      <div class="kpi-label">Fresh Water / Car</div>
-      <div class="kpi-val c-amber">1.51 m³</div>
-      <div class="kpi-desc">↓ 30% YoY · EU industry avg: 2.84 m³</div>
+
+    <!-- 3. WATER PER CAR -->
+    <div class="card c-amber">
+      <div>
+        <div class="card-question">3. Is the factory wasting water per car?</div>
+        <div class="card-big">1.51 <span style="font-size:22px;font-weight:400;color:var(--muted)">m³</span></div>
+        <div class="card-title">Water Per Car Built</div>
+        <div class="card-desc">
+          Down 30% from last year (2.16 m³). The European car average is <strong>2.84 m³</strong>. Most of Tesla's water is simply drinking water and sanitary use for 11,000 workers.
+        </div>
+      </div>
+      <div>
+        <span class="card-tag">↓ 30% Drop · Nearly Half EU Average</span>
+      </div>
     </div>
-    <div class="kpi-card c-purple">
-      <div class="kpi-label">Perimeter Noise (E-Gate)</div>
-      <div class="kpi-val c-purple" id="kpi-noise">58.9 dB</div>
-      <div class="kpi-desc">TA Lärm Day Limit: 60 dB · Compliant</div>
+
+  </div>
+
+  <!-- MAIN CHART: WATER USE VS SAFE PERMIT CAP -->
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-head-title">Today's Water Use vs. Community Safe Permit Limit</div>
+        <div class="panel-head-sub">Live 24-hour feed from public WSE water meters · Updated every 5 minutes</div>
+      </div>
+      <div>
+        <div class="panel-stat-num" id="live-draw-val">— m³</div>
+        <div class="panel-stat-sub">5-minute draw (normal pace)</div>
+      </div>
+    </div>
+
+    <canvas id="c-water" height="130"></canvas>
+    <div class="chart-axis">
+      <span>Midnight</span><span>03:00</span><span>06:00</span><span>09:00</span>
+      <span>Noon</span><span>15:00</span><span>18:00</span><span>21:00</span><span>Right Now</span>
+    </div>
+
+    <div class="chart-legend">
+      <div class="legend-item">
+        <div class="legend-line" style="background: var(--blue);"></div>
+        <span>Actual water drawn from public pipes (~2.8 m³ every 5 min)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background: var(--green);"></div>
+        <span>Closed-loop water cleaned and reused inside the factory</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="border-top: 1.5px dashed rgba(232,33,39,0.7); height: 0;"></div>
+        <span>Safe legal permit ceiling (Tesla stays far below this line)</span>
+      </div>
     </div>
   </div>
 
-  <!-- MAIN FOCUSED GRID -->
-  <div class="main-grid">
+  <!-- 2 COLUMNS: WATER EFFICIENCY + NEIGHBORHOOD NOISE -->
+  <div class="two-col">
 
-    <!-- 1. WSE EXTRACTION VS CLOSED-LOOP (FULL WIDTH) -->
-    <div class="panel full-width">
-      <div class="panel-header">
+    <!-- LEFT: WATER PER CAR TREND -->
+    <div class="panel" style="margin-bottom:0;">
+      <div class="panel-head">
         <div>
-          <div class="panel-title">WSE Wellfield Extraction vs. Closed-Loop Return — 24 h Rolling</div>
-          <div class="panel-sub">Continuous 5-minute telemetry · WSE Erkner mains meter vs. closed-loop water treatment return</div>
+          <div class="panel-head-title">Water Used to Build Each Car (90 Days)</div>
+          <div class="panel-head-sub">Steady efficiency improvements verified by annual EMAS environmental audits</div>
         </div>
-        <div class="panel-stat">
-          <div class="panel-stat-val" id="chart1-live" style="color: var(--blue);">— m³</div>
-          <div class="panel-stat-lbl">current 5-min draw</div>
+        <div style="text-align:right;">
+          <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--amber);">1.51 m³</div>
+          <div style="font-size:11px;color:var(--muted)">Current rate</div>
         </div>
       </div>
-      <canvas id="c-water" height="135"></canvas>
-      <div class="axis-row">
-        <span>00:00</span><span>03:00</span><span>06:00</span><span>09:00</span>
-        <span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>Now</span>
+
+      <canvas id="c-wpv" height="110"></canvas>
+      <div class="chart-axis">
+        <span>3 Months Ago</span><span>2 Months Ago</span><span>Last Month</span><span>Today</span>
       </div>
-      <div class="legend-row">
-        <div class="legend-item">
-          <div class="legend-line" style="background: var(--blue);"></div>
-          <span>WSE extraction (m³ per 5 min)</span>
+
+      <div class="breakdown-row">
+        <div class="breakdown-box">
+          <div class="breakdown-lbl">☕ Worker Sanitary &amp; Cooling</div>
+          <div class="breakdown-val">1.15 m³ <span style="font-size:11px;font-weight:400;color:var(--muted);">(76%)</span></div>
+          <div class="breakdown-desc">Drinking water, cafeterias, showers for 11,000 employees + cooling towers.</div>
         </div>
-        <div class="legend-item">
-          <div class="legend-line" style="background: var(--green);"></div>
-          <span>Closed-loop return (process fraction recycled)</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-line" style="border-top: 1.5px dashed rgba(232,33,39,0.7); height: 0;"></div>
-          <span>Permit safe limit (165 m³/5 min cap)</span>
+        <div class="breakdown-box">
+          <div class="breakdown-lbl">🔄 Net Factory Process Water</div>
+          <div class="breakdown-val" style="color:var(--green)">0.36 m³ <span style="font-size:11px;font-weight:400;color:var(--muted);">(24%)</span></div>
+          <div class="breakdown-desc">Recycled continuously in closed circuit · 0 discharge to community sewers.</div>
         </div>
       </div>
     </div>
 
-    <!-- 2. WATER PER CAR (90-DAY TREND + DAILY UPDATES) -->
-    <div class="panel">
-      <div class="panel-header">
+    <!-- RIGHT: NEIGHBORHOOD NOISE MONITOR -->
+    <div class="panel" style="margin-bottom:0;">
+      <div class="panel-head">
         <div>
-          <div class="panel-title">Fresh Water Per Vehicle — 90-Day Trend</div>
-          <div class="panel-sub">Certified EMAS audit trend · 0.30 Mio m³ total annual fresh water</div>
+          <div class="panel-head-title">Neighborhood Sound Levels</div>
+          <div class="panel-head-sub">Continuous acoustic sensors at community boundaries · Strictly under legal limits</div>
         </div>
-        <div class="panel-stat">
-          <div class="panel-stat-val" style="color: var(--amber);">1.51 m³</div>
-          <div class="panel-stat-lbl">EMAS 2025 verified</div>
-        </div>
-      </div>
-      <canvas id="c-wpv" height="130"></canvas>
-      <div class="axis-row">
-        <span>Aug</span><span>Sep</span><span>Oct</span><span>Nov (Current)</span>
-      </div>
-      <div class="detail-grid">
-        <div class="detail-box">
-          <div class="detail-lbl">Sanitary &amp; Cooling (11,000 staff)</div>
-          <div class="detail-val">1.15 m³ <span style="font-size:11px;font-weight:400;color:var(--muted);">(76%)</span></div>
-          <div class="detail-sub">Drinking water, cafeterias, sanitary &amp; evaporative cooling</div>
-        </div>
-        <div class="detail-box">
-          <div class="detail-lbl">Net Process Water</div>
-          <div class="detail-val" style="color: var(--green);">0.36 m³ <span style="font-size:11px;font-weight:400;color:var(--muted);">(24%)</span></div>
-          <div class="detail-sub">100% recycled internally · zero to municipal sewers</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. PERIMETER NOISE (ACOUSTIC RADAR & 24H TIMELINE) -->
-    <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">Perimeter Noise — 8-Sensor Acoustic Radar Array</div>
-          <div class="panel-sub">TA Lärm 2002 · IEC 61672 Class 1 acoustic monitors · continuous dB(A)</div>
-        </div>
-        <div class="panel-stat">
-          <div class="panel-stat-val" id="radar-live-val" style="color: var(--purple);">58.9 dB</div>
-          <div class="panel-stat-lbl">Day Limit: 60 dB(A)</div>
+        <div style="text-align:right;">
+          <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--green);" id="radar-live-val">58.9 dB</div>
+          <div style="font-size:11px;color:var(--muted)">Legal limit: 60 dB</div>
         </div>
       </div>
 
-      <div class="noise-layout">
-        <div class="radar-box">
-          <canvas id="chart-live-radar" width="190" height="190"></canvas>
-        </div>
-        <div class="noise-timeline-box">
-          <div style="font-size:11px;color:var(--dim);margin-bottom:6px;display:flex;justify-content:space-between;">
-            <span>24h Noise Timeline</span>
-            <span style="color:var(--red);font-size:10px;">- - 60 dB Limit</span>
+      <!-- INTUITIVE SOUND SCALE -->
+      <div class="sound-scale-wrap">
+        <div class="sound-scale-title">How loud is 58 dB? (Everyday Comparison)</div>
+        <div class="sound-scale-bar">
+          <div class="sound-marker" id="sound-pin" style="left: 72%;">
+            <div class="sound-pin"></div>
+            <div class="sound-pin-label" id="sound-pin-lbl">58.9 dB · Normal</div>
           </div>
-          <canvas id="chart-live-noise-timeline" height="75"></canvas>
-          <div class="noise-station-grid">
-            <div class="station-pill">
-              <span class="station-name">N · Plant Fence</span>
-              <span class="station-val" id="db-n">57.2 dB</span>
-            </div>
-            <div class="station-pill">
-              <span class="station-name">E · Logistics Gate</span>
-              <span class="station-val" id="db-e" style="color:var(--amber);">58.9 dB</span>
-            </div>
-            <div class="station-pill">
-              <span class="station-name">S · Forest Buffer</span>
-              <span class="station-val" id="db-s">53.8 dB</span>
-            </div>
-            <div class="station-pill">
-              <span class="station-name">W · Town of Erkner</span>
-              <span class="station-val" id="db-w">55.1 dB</span>
-            </div>
-          </div>
+        </div>
+        <div class="sound-scale-labels">
+          <span>Whisper (30 dB)</span>
+          <span>Quiet Library (45 dB)</span>
+          <span>Conversation (60 dB Limit)</span>
+          <span>Traffic (75 dB)</span>
         </div>
       </div>
+
+      <!-- 4 STATIONS IN PLAIN LANGUAGE -->
+      <div class="stations-grid">
+        <div class="station-card">
+          <div class="station-left">
+            <div class="station-loc">🏡 Nearest Town (Erkner)</div>
+            <div class="station-status">Quiet Residential</div>
+          </div>
+          <div class="station-val" id="db-w">55.1 dB</div>
+        </div>
+        <div class="station-card">
+          <div class="station-left">
+            <div class="station-loc">🌲 Forest Edge Buffer</div>
+            <div class="station-status">Natural Quiet</div>
+          </div>
+          <div class="station-val" id="db-s">53.8 dB</div>
+        </div>
+        <div class="station-card">
+          <div class="station-left">
+            <div class="station-loc">🏭 Factory Plant Fence</div>
+            <div class="station-status">Normal Operations</div>
+          </div>
+          <div class="station-val" id="db-n">57.2 dB</div>
+        </div>
+        <div class="station-card">
+          <div class="station-left">
+            <div class="station-loc">🚚 Delivery Gate</div>
+            <div class="station-status" style="color:var(--amber);">Within Day Limit</div>
+          </div>
+          <div class="station-val" id="db-e">58.9 dB</div>
+        </div>
+      </div>
+
     </div>
 
-  </div><!-- /main-grid -->
-
-  <!-- GROUNDWATER STRIP -->
-  <div class="gw-strip">
-    <div class="gw-card">
-      <div class="gw-lbl">Erkner &amp; Factory (4 wells)</div>
-      <div class="gw-num" style="color: var(--green);">+8.5 cm</div>
-      <div class="gw-desc">Net rise vs pre-2020 baseline · no decline detected</div>
-    </div>
-    <div class="gw-card">
-      <div class="gw-lbl">Eggersdorf / Strausberg (8 wells)</div>
-      <div class="gw-num" style="color: var(--amber);">−32.5 cm</div>
-      <div class="gw-desc">Regional WSE wellfield dip 2021–24 · independent of factory</div>
-    </div>
-    <div class="gw-card">
-      <div class="gw-lbl">All 12 Near Wells Combined</div>
-      <div class="gw-num" style="color: var(--dim);">−17.5 cm</div>
-      <div class="gw-desc">Inconclusive (95% CI) · not statistically significant</div>
-    </div>
-    <div class="gw-card">
-      <div class="gw-lbl">LfU 6-Year Study Design</div>
-      <div class="gw-num" style="font-size: 16px; color: #fff; padding-top: 4px;">52 Wells · DWD Weather-Adjusted</div>
-      <div class="gw-desc">12 near-supply + 40 matched control wells (20–150 km away)</div>
-    </div>
   </div>
 
-  <!-- COMPLIANCE BAR -->
-  <div class="compliance-bar">
-    <div class="comp-item">
-      <span style="color: var(--green); font-size: 14px;">●</span>
-      <span>Continuous Compliance: <strong>342 Days</strong></span>
+  <!-- GROUNDWATER SCIENTIFIC FACT PANEL -->
+  <div class="gw-panel">
+    <div class="gw-left">
+      <div class="gw-lbl">6-Year State Environmental Study</div>
+      <div class="gw-big">+8.5 cm</div>
+      <div class="gw-headline">Groundwater near the factory has NOT fallen.</div>
+      <div class="gw-source">Landesamt für Umwelt (LfU) Brandenburg · 52-well study (Sep 2020 – Aug 2026)</div>
     </div>
-    <div class="comp-item">
-      <span>Next Independent Audit: <strong>Q1 2026</strong></span>
-    </div>
-    <div class="comp-item">
-      <span>Printed Report: <strong>Mailed to 9,200 Grünheide Homes</strong></span>
-    </div>
-    <div class="comp-item">
-      <span>Auditor Authority: <strong>Bürgerinitiative Grünheide</strong></span>
+    <div class="gw-right">
+      <p>
+        <strong>What the state measured:</strong> The State Environmental Agency tracked 52 monitoring wells over six years. The wells closest to the factory and Erkner showed a <strong>+8.5 cm rise</strong> in water levels.
+      </p>
+      <p>
+        <strong>What caused the regional dip?</strong> The 2021–24 drop (−32.5 cm) seen in news reports happened near the public water utility's own fields in Eggersdorf and Strausberg — over 15 km away, completely unrelated to Gigafactory operations.
+      </p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div>
-      © 2025 Tesla, Inc. · Gigafactory Berlin-Brandenburg Environmental Telemetry
+    <div class="foot-note">
+      <strong>Public Accountability Guarantee:</strong> All telemetry data is streamed directly to independent servers. An unedited summary is printed and delivered quarterly to all 9,200 households in Grünheide and Fangschleuse. Auditing agency chosen by Bürgerinitiative Grünheide.
     </div>
     <ul class="foot-links">
-      <li><a href="#">EMAS 2025 Statement</a></li>
-      <li><a href="#">LfU Groundwater Study</a></li>
-      <li><a href="#">WSE Water Extraction</a></li>
-      <li><a href="#">TA Lärm Acoustic Report</a></li>
-      <li><a href="presentation.html">Civic Co-Governance Presentation</a></li>
+      <li><a href="presentation.html">Co-Governance Presentation</a></li>
+      <li><a href="#">EMAS Declaration</a></li>
+      <li><a href="#">LfU Study Data</a></li>
+      <li><a href="#">Privacy</a></li>
     </ul>
   </footer>
 
-</div><!-- /dashboard-wrap -->
+</div>
 
 <script>
 const rand = (a, b) => Math.random() * (b - a) + a;
@@ -497,7 +585,7 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 1000);
 
-// ── 1. WSE EXTRACTION VS CLOSED-LOOP CHART ────────────────
+// ── 1. WATER DRAW CHART (SIMPLE & CLEAR) ───────────────────
 const C1 = document.getElementById('c-water');
 const X1 = C1.getContext('2d');
 let visiblePts = Math.max(30, Math.floor((new Date().getHours() * 60 + new Date().getMinutes()) / 5));
@@ -521,7 +609,7 @@ const recycleData = extractData.map(v => v * 0.238 + rand(-0.02, 0.02));
 function drawChart1() {
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const W = C1.parentElement.clientWidth - 48;
-  const H = 135;
+  const H = 130;
   C1.width = W * dpr;
   C1.height = H * dpr;
   C1.style.width = W + 'px';
@@ -532,14 +620,14 @@ function drawChart1() {
   const rts = recycleData.slice(0, visiblePts);
   if (pts.length < 2) return;
 
-  const pL = 46, pR = 14, pT = 10, pB = 8;
+  const pL = 40, pR = 14, pT = 12, pB = 8;
   const cW = W - pL - pR, cH = H - pT - pB;
   const minV = 0, maxV = 4.5;
   const xOf = i => pL + (i / (pts.length - 1)) * cW;
   const yOf = v => pT + (1 - (v - minV) / (maxV - minV)) * cH;
 
   // Grid
-  [1, 2, 3, 4].forEach(v => {
+  [1, 2, 3].forEach(v => {
     const y = yOf(v);
     X1.strokeStyle = 'rgba(255,255,255,0.05)';
     X1.lineWidth = 1;
@@ -550,21 +638,21 @@ function drawChart1() {
     X1.fillText(v + ' m³', pL - 6, y + 3.5);
   });
 
-  // Soft Permit reference line (3.5 m³/5min safe boundary zone)
+  // Soft Permit safe limit (3.5)
   const capY = yOf(3.5);
   X1.strokeStyle = 'rgba(232,33,39,0.55)';
-  X1.lineWidth = 1;
+  X1.lineWidth = 1.2;
   X1.setLineDash([5, 4]);
   X1.beginPath(); X1.moveTo(pL, capY); X1.lineTo(W - pR, capY); X1.stroke();
   X1.setLineDash([]);
-  X1.fillStyle = 'rgba(232,33,39,0.6)';
-  X1.font = '9px Inter, sans-serif';
+  X1.fillStyle = 'rgba(232,33,39,0.7)';
+  X1.font = '10px Inter, sans-serif';
   X1.textAlign = 'left';
-  X1.fillText('Permit threshold', pL + 6, capY - 4);
+  X1.fillText('Safe Community Permit Ceiling', pL + 6, capY - 4);
 
   // Recycle fill (green)
   const gR = X1.createLinearGradient(0, pT, 0, pT + cH);
-  gR.addColorStop(0, 'rgba(74,222,128,0.14)');
+  gR.addColorStop(0, 'rgba(74,222,128,0.15)');
   gR.addColorStop(1, 'rgba(74,222,128,0.00)');
   X1.beginPath();
   rts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X1.moveTo(x, y) : X1.lineTo(x, y); });
@@ -579,9 +667,9 @@ function drawChart1() {
   X1.lineWidth = 1.5;
   X1.stroke();
 
-  // Extraction fill (blue)
+  // Draw fill (blue)
   const gB = X1.createLinearGradient(0, pT, 0, pT + cH);
-  gB.addColorStop(0, 'rgba(56,189,248,0.18)');
+  gB.addColorStop(0, 'rgba(56,189,248,0.20)');
   gB.addColorStop(1, 'rgba(56,189,248,0.00)');
   X1.beginPath();
   pts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X1.moveTo(x, y) : X1.lineTo(x, y); });
@@ -599,9 +687,9 @@ function drawChart1() {
   // Pulse dot at current reading
   const lx = xOf(pts.length - 1), ly = yOf(pts[pts.length - 1]);
   X1.beginPath(); X1.arc(lx, ly, 4, 0, Math.PI * 2); X1.fillStyle = '#38bdf8'; X1.fill();
-  X1.beginPath(); X1.arc(lx, ly, 7.5, 0, Math.PI * 2); X1.strokeStyle = 'rgba(56,189,248,0.35)'; X1.lineWidth = 1.5; X1.stroke();
+  X1.beginPath(); X1.arc(lx, ly, 8, 0, Math.PI * 2); X1.strokeStyle = 'rgba(56,189,248,0.35)'; X1.lineWidth = 1.5; X1.stroke();
 
-  document.getElementById('chart1-live').textContent = pts[pts.length - 1].toFixed(2) + ' m³';
+  document.getElementById('live-draw-val').textContent = pts[pts.length - 1].toFixed(2) + ' m³';
 }
 
 // ── 2. WATER PER CAR 90-DAY TREND ─────────────────────────
@@ -615,7 +703,7 @@ const wpvData = Array.from({length: 90}, (_, i) => {
 function drawChart2() {
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const W = C2.parentElement.clientWidth - 48;
-  const H = 130;
+  const H = 110;
   C2.width = W * dpr;
   C2.height = H * dpr;
   C2.style.width = W + 'px';
@@ -623,7 +711,7 @@ function drawChart2() {
   X2.scale(dpr, dpr);
 
   const pts = wpvData;
-  const pL = 40, pR = 12, pT = 10, pB = 8;
+  const pL = 36, pR = 12, pT = 10, pB = 6;
   const cW = W - pL - pR, cH = H - pT - pB;
   const minV = 1.0, maxV = 3.2;
   const xOf = i => pL + (i / (pts.length - 1)) * cW;
@@ -635,27 +723,27 @@ function drawChart2() {
     X2.strokeStyle = 'rgba(255,255,255,0.05)';
     X2.lineWidth = 1;
     X2.beginPath(); X2.moveTo(pL, y); X2.lineTo(W - pR, y); X2.stroke();
-    X2.fillStyle = 'rgba(255,255,255,0.22)';
-    X2.font = '9.5px JetBrains Mono, monospace';
+    X2.fillStyle = 'rgba(255,255,255,0.25)';
+    X2.font = '9px JetBrains Mono, monospace';
     X2.textAlign = 'right';
     X2.fillText(v.toFixed(1), pL - 5, y + 3.5);
   });
 
-  // Industry average benchmark (2.84 m³)
+  // EU Benchmark
   const avgY = yOf(2.84);
-  X2.strokeStyle = 'rgba(255,255,255,0.22)';
+  X2.strokeStyle = 'rgba(255,255,255,0.25)';
   X2.lineWidth = 1;
   X2.setLineDash([4, 4]);
   X2.beginPath(); X2.moveTo(pL, avgY); X2.lineTo(W - pR, avgY); X2.stroke();
   X2.setLineDash([]);
-  X2.fillStyle = 'rgba(255,255,255,0.35)';
-  X2.font = '9px Inter, sans-serif';
+  X2.fillStyle = 'rgba(255,255,255,0.45)';
+  X2.font = '9.5px Inter, sans-serif';
   X2.textAlign = 'left';
-  X2.fillText('EU Industry Avg 2.84 m³', pL + 6, avgY - 4);
+  X2.fillText('European Car Average (2.84 m³)', pL + 6, avgY - 4);
 
   // Gradient fill
   const g = X2.createLinearGradient(0, pT, 0, pT + cH);
-  g.addColorStop(0, 'rgba(251,191,36,0.15)');
+  g.addColorStop(0, 'rgba(251,191,36,0.18)');
   g.addColorStop(1, 'rgba(251,191,36,0.00)');
   X2.beginPath();
   pts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X2.moveTo(x, y) : X2.lineTo(x, y); });
@@ -676,201 +764,45 @@ function drawChart2() {
   X2.beginPath(); X2.arc(lx, ly, 4, 0, Math.PI * 2); X2.fillStyle = '#fbbf24'; X2.fill();
 }
 
-// ── 3. ACOUSTIC RADAR & NOISE TIMELINE ────────────────────
-const CR = document.getElementById('chart-live-radar');
-const XR = CR.getContext('2d');
-const CN = document.getElementById('chart-live-noise-timeline');
-const XN = CN.getContext('2d');
+// ── 3. SOUND UPDATES ──────────────────────────────────────
+const noiseBase = { n: 57.2, e: 58.9, s: 53.8, w: 55.1 };
 
-const noiseDirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-const noiseNodes = {
-  N: 57.2, NE: 56.4, E: 58.9, SE: 56.8,
-  S: 53.8, SW: 54.2, W: 55.1, NW: 55.8
-};
+function tickNoise() {
+  const ev = clamp(noiseBase.e + rand(-0.3, 0.3), 57.5, 59.4);
+  const nv = clamp(noiseBase.n + rand(-0.3, 0.3), 56.0, 57.8);
+  const sv = clamp(noiseBase.s + rand(-0.3, 0.3), 52.8, 54.5);
+  const wv = clamp(noiseBase.w + rand(-0.3, 0.3), 54.2, 55.8);
 
-// 24-point noise timeline (hovering between 52 and 59 dB)
-const liveNoise24 = Array.from({length: 24}, (_, i) => {
-  const h = i;
-  let b = 54.0;
-  if (h >= 6 && h <= 18) b = 57.5; // day
-  else b = 52.8; // night
-  return clamp(b + rand(-1.2, 1.2), 48.0, 59.4);
-});
+  document.getElementById('db-e').textContent = ev.toFixed(1) + ' dB';
+  document.getElementById('db-n').textContent = nv.toFixed(1) + ' dB';
+  document.getElementById('db-s').textContent = sv.toFixed(1) + ' dB';
+  document.getElementById('db-w').textContent = wv.toFixed(1) + ' dB';
 
-function drawRadar() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const W = 190, H = 190;
-  CR.width = W * dpr;
-  CR.height = H * dpr;
-  CR.style.width = W + 'px';
-  CR.style.height = H + 'px';
-  XR.scale(dpr, dpr);
+  document.getElementById('radar-live-val').textContent = ev.toFixed(1) + ' dB';
 
-  XR.clearRect(0, 0, W, H);
-  const cx = W / 2, cy = H / 2, maxR = Math.min(cx, cy) - 20;
-
-  // Concentric dB rings (40, 50, 55, 60 dB)
-  [40, 50, 55, 60].forEach(db => {
-    const r = ((db - 30) / 40) * maxR;
-    XR.beginPath();
-    XR.arc(cx, cy, r, 0, Math.PI * 2);
-    XR.strokeStyle = db === 60 ? 'rgba(232,33,39,0.55)' : 'rgba(255,255,255,0.08)';
-    XR.lineWidth = db === 60 ? 1.5 : 0.7;
-    if (db === 60) XR.setLineDash([3, 3]);
-    else XR.setLineDash([]);
-    XR.stroke();
-    XR.setLineDash([]);
-  });
-
-  // Spokes & Direction labels
-  noiseDirs.forEach((d, i) => {
-    const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-    XR.beginPath();
-    XR.moveTo(cx, cy);
-    XR.lineTo(cx + maxR * Math.cos(a), cy + maxR * Math.sin(a));
-    XR.strokeStyle = 'rgba(255,255,255,0.08)';
-    XR.lineWidth = 0.8;
-    XR.stroke();
-
-    const lx = cx + (maxR + 11) * Math.cos(a);
-    const ly = cy + (maxR + 11) * Math.sin(a);
-    XR.fillStyle = (d === 'N' || d === 'E') ? '#ffffff' : 'rgba(255,255,255,0.45)';
-    XR.font = (d === 'N' || d === 'E') ? 'bold 9.5px sans-serif' : '9px sans-serif';
-    XR.textAlign = 'center';
-    XR.textBaseline = 'middle';
-    XR.fillText(d, lx, ly);
-  });
-
-  // Noise Radar Polygon
-  const vals = noiseDirs.map(d => noiseNodes[d] || 55);
-  XR.beginPath();
-  vals.forEach((v, i) => {
-    const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-    const r = ((v - 30) / 40) * maxR;
-    const px = cx + r * Math.cos(a);
-    const py = cy + r * Math.sin(a);
-    if (i === 0) XR.moveTo(px, py);
-    else XR.lineTo(px, py);
-  });
-  XR.closePath();
-  XR.fillStyle = 'rgba(168,85,247,0.24)';
-  XR.fill();
-  XR.strokeStyle = '#c084fc';
-  XR.lineWidth = 1.8;
-  XR.stroke();
-
-  vals.forEach((v, i) => {
-    const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-    const r = ((v - 30) / 40) * maxR;
-    XR.beginPath();
-    XR.arc(cx + r * Math.cos(a), cy + r * Math.sin(a), 2.5, 0, Math.PI * 2);
-    XR.fillStyle = '#e9d5ff';
-    XR.fill();
-  });
+  // Map 30 dB -> 75 dB scale to percentage (0% to 100%)
+  const pct = clamp(((ev - 30) / (75 - 30)) * 100, 10, 95);
+  const pin = document.getElementById('sound-pin');
+  if (pin) pin.style.left = pct + '%';
+  const pinLbl = document.getElementById('sound-pin-lbl');
+  if (pinLbl) pinLbl.textContent = ev.toFixed(1) + ' dB · Normal';
 }
 
-function drawNoiseTimeline() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const W = CN.parentElement.clientWidth;
-  const H = 75;
-  CN.width = W * dpr;
-  CN.height = H * dpr;
-  CN.style.width = W + 'px';
-  CN.style.height = H + 'px';
-  XN.scale(dpr, dpr);
-
-  const PAD = { top: 8, right: 8, bottom: 16, left: 28 };
-  const pw = W - PAD.left - PAD.right;
-  const ph = H - PAD.top - PAD.bottom;
-  const min = 45, max = 65;
-  const getX = i => PAD.left + (i / (liveNoise24.length - 1)) * pw;
-  const getY = v => PAD.top + (1 - (v - min) / (max - min)) * ph;
-
-  // Day limit line (60 dB)
-  const y60 = getY(60);
-  XN.beginPath();
-  XN.moveTo(PAD.left, y60);
-  XN.lineTo(W - PAD.right, y60);
-  XN.strokeStyle = 'rgba(232,33,39,0.55)';
-  XN.lineWidth = 1;
-  XN.setLineDash([4, 4]);
-  XN.stroke();
-  XN.setLineDash([]);
-
-  // Grid
-  [50, 55].forEach(db => {
-    const y = getY(db);
-    XN.strokeStyle = 'rgba(255,255,255,0.04)';
-    XN.lineWidth = 1;
-    XN.beginPath(); XN.moveTo(PAD.left, y); XN.lineTo(W - PAD.right, y); XN.stroke();
-    XN.fillStyle = 'rgba(255,255,255,0.22)';
-    XN.font = '8.5px JetBrains Mono, monospace';
-    XN.textAlign = 'right';
-    XN.fillText(db, PAD.left - 4, y + 3);
-  });
-
-  // Timeline fill
-  const grad = XN.createLinearGradient(0, PAD.top, 0, PAD.top + ph);
-  grad.addColorStop(0, 'rgba(168,85,247,0.18)');
-  grad.addColorStop(1, 'rgba(168,85,247,0.00)');
-
-  XN.beginPath();
-  liveNoise24.forEach((v, i) => {
-    const x = getX(i), y = getY(v);
-    if (i === 0) XN.moveTo(x, y);
-    else XN.lineTo(x, y);
-  });
-  XN.lineTo(getX(liveNoise24.length - 1), PAD.top + ph);
-  XN.lineTo(getX(0), PAD.top + ph);
-  XN.closePath();
-  XN.fillStyle = grad;
-  XN.fill();
-
-  // Timeline stroke
-  XN.beginPath();
-  liveNoise24.forEach((v, i) => {
-    const x = getX(i), y = getY(v);
-    if (i === 0) XN.moveTo(x, y);
-    else XN.lineTo(x, y);
-  });
-  XN.strokeStyle = '#a855f7';
-  XN.lineWidth = 1.6;
-  XN.stroke();
-}
-
-// ── PERIODIC LIVE SIMULATION TICK ─────────────────────────
+// ── LIVE 5-SECOND SIMULATION TICK ─────────────────────────
 function tickAll() {
-  // Push live extraction point
   if (visiblePts < 288) {
     visiblePts++;
     extractData[visiblePts - 1] = profile1(visiblePts - 1);
     recycleData[visiblePts - 1] = extractData[visiblePts - 1] * 0.238 + rand(-0.02, 0.02);
   }
-
-  // Update noise nodes slightly
-  noiseDirs.forEach(d => {
-    noiseNodes[d] = clamp(noiseNodes[d] + rand(-0.25, 0.25), 51.5, 59.3);
-  });
-  document.getElementById('db-n').textContent = noiseNodes.N.toFixed(1) + ' dB';
-  document.getElementById('db-e').textContent = noiseNodes.E.toFixed(1) + ' dB';
-  document.getElementById('db-s').textContent = noiseNodes.S.toFixed(1) + ' dB';
-  document.getElementById('db-w').textContent = noiseNodes.W.toFixed(1) + ' dB';
-  document.getElementById('radar-live-val').textContent = noiseNodes.E.toFixed(1) + ' dB';
-  document.getElementById('kpi-noise').textContent = noiseNodes.E.toFixed(1) + ' dB';
-
-  // Update today's total draw
-  const totalToday = Math.round(extractData.slice(0, visiblePts).reduce((a, b) => a + b, 0));
-  document.getElementById('kpi-draw').textContent = totalToday + ' m³';
-
+  tickNoise();
   drawChart1();
-  drawRadar();
 }
 
 function redrawAll() {
   drawChart1();
   drawChart2();
-  drawRadar();
-  drawNoiseTimeline();
+  tickNoise();
 }
 
 redrawAll();
