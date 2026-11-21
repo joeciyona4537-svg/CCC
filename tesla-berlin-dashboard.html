@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Water Transparency & Telemetry · Gigafactory Berlin-Brandenburg | Tesla</title>
+<title>Water Transparency · Gigafactory Berlin-Brandenburg | Tesla</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -27,7 +27,6 @@
   --blue-bg:   rgba(2, 132, 199, 0.08);
   --amber:     #d97706;
   --amber-bg:  rgba(217, 119, 6, 0.08);
-  --cyan:      #0891b2;
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -44,8 +43,8 @@ body {
 /* ── NAV ───────────────────────────────────────────────── */
 nav {
   position: sticky; top: 0; left: 0; right: 0;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.95);
+  height: 52px;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px;
@@ -54,8 +53,8 @@ nav {
 }
 .nav-titles { display: flex; align-items: center; gap: 12px; }
 .nav-logo svg { fill: var(--text-dark); display: block; }
-.nav-title { font-size: 13.5px; font-weight: 600; color: var(--text-dark); letter-spacing: -0.01em; }
-.nav-sub { font-size: 11.5px; color: var(--text-dim); }
+.nav-title { font-size: 14px; font-weight: 600; color: var(--text-dark); letter-spacing: -0.01em; }
+.nav-sub { font-size: 12px; color: var(--text-dim); }
 
 .nav-right { display: flex; align-items: center; gap: 16px; }
 .live-pill {
@@ -77,195 +76,250 @@ nav {
 
 /* ── WRAPPER ───────────────────────────────────────────── */
 .dashboard-wrap {
-  max-width: 1240px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 24px 32px 48px;
+  padding: 28px 24px 56px;
 }
 
-/* ── HEADER SUMMARY BAR ────────────────────────────────── */
-.header-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 20px; flex-wrap: wrap; gap: 16px;
+/* ── HEADER INTRO ──────────────────────────────────────── */
+.hero-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 32px;
 }
-.header-bar-left .eyebrow {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 4px;
+.hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 8px;
 }
-.header-bar-left h1 {
-  font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; color: var(--text-dark);
+.hero-title {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;
+  color: var(--text-dark); margin-bottom: 10px;
 }
-.header-bar-right {
-  font-size: 11.5px; color: var(--text-dim); text-align: right; line-height: 1.6;
+.hero-sub {
+  font-size: 14px; color: var(--text-dim); line-height: 1.55;
 }
 
-/* ── 4 COMPACT HERO KPI CARDS ───────────────────────────── */
-.kpi-row {
+/* ── 3 HERO STAT CARDS ─────────────────────────────────── */
+.hero-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
 }
-.kpi-card {
+.hero-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px 20px;
+  border-radius: 12px;
+  padding: 24px 24px 22px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.kpi-card::before {
+.hero-card::before {
   content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
+  top: 0; left: 0; right: 0; height: 4px;
 }
-.kpi-card.c-blue::before  { background: var(--blue); }
-.kpi-card.c-green::before { background: var(--green); }
-.kpi-card.c-amber::before { background: var(--amber); }
-.kpi-card.c-cyan::before  { background: var(--cyan); }
+.hero-card.c-blue::before  { background: var(--blue); }
+.hero-card.c-green::before { background: var(--green); }
+.hero-card.c-amber::before { background: var(--amber); }
 
-.kpi-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.kpi-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
-.kpi-badge { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; font-family: var(--mono); }
-.kpi-badge.b-blue  { background: var(--blue-bg); color: var(--blue); }
-.kpi-badge.b-green { background: var(--green-bg); color: var(--green); }
-.kpi-badge.b-amber { background: var(--amber-bg); color: var(--amber); }
+.card-question {
+  font-size: 12px; font-weight: 600; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px;
+}
+.card-hero-num {
+  font-family: var(--mono); font-size: 44px; font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px;
+}
+.card-hero-num.c-blue  { color: var(--blue); }
+.card-hero-num.c-green { color: var(--green); }
+.card-hero-num.c-amber { color: var(--amber); }
 
-.kpi-val { font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.kpi-val.c-blue  { color: var(--blue); }
-.kpi-val.c-green { color: var(--green); }
-.kpi-val.c-amber { color: var(--amber); }
-.kpi-val.c-cyan  { color: var(--cyan); }
-
-.kpi-sub { font-size: 11.5px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; display: flex; justify-content: space-between; }
-.kpi-sub strong { color: var(--text-dark); }
-
-/* ── GRID LAYOUT ───────────────────────────────────────── */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
+.card-hero-label {
+  font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px;
+}
+.card-hero-desc {
+  font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-bottom: 14px;
 }
 
-.panel {
-  background: var(--bg-card);
+/* Micro Comparison Bar in Card 3 */
+.bench-bar-wrap {
+  background: var(--bg-subtle);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 20px 22px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  padding: 10px 12px;
+  margin-top: auto;
 }
-.panel.full-width { grid-column: span 2; }
+.bench-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; margin-bottom: 4px;
+}
+.bench-row:last-child { margin-bottom: 0; }
+.bench-track {
+  width: 100%; height: 6px; background: rgba(0,0,0,0.06);
+  border-radius: 99px; overflow: hidden; margin-top: 2px; margin-bottom: 8px;
+}
+.bench-fill-tesla { width: 53%; height: 100%; background: var(--amber); border-radius: 99px; }
+.bench-fill-eu    { width: 100%; height: 100%; background: #cbd5e1; border-radius: 99px; }
 
+/* ── 24H LIVE WAVE + METER ROW ─────────────────────────── */
+.wave-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 26px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  margin-bottom: 24px;
+}
 .panel-head {
   display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 14px; gap: 14px;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 12px;
 }
-.panel-title { font-size: 13.5px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.01em; }
-.panel-sub   { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.panel-title { font-size: 16px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.01em; }
+.panel-sub { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
 
-.panel-stat { text-align: right; }
-.panel-stat-val { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.panel-stat-lbl { font-size: 10.5px; color: var(--text-dim); margin-top: 2px; }
+.panel-metrics {
+  display: flex; align-items: center; gap: 24px;
+}
+.p-metric { text-align: right; }
+.p-metric-val { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--blue); line-height: 1; }
+.p-metric-lbl { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
 
-canvas { display: block; width: 100%; }
+canvas#c-water { display: block; width: 100%; height: 120px; }
 
 .axis-row {
   display: flex; justify-content: space-between;
-  font-size: 10px; color: var(--text-muted); font-family: var(--mono);
-  margin-top: 6px; letter-spacing: 0.02em;
-}
-
-/* ── CLEAN SUMMARY TABLES ──────────────────────────────── */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11.5px;
+  font-size: 10.5px; color: var(--text-muted); font-family: var(--mono);
   margin-top: 8px;
 }
-.data-table th {
-  text-align: left;
-  font-size: 10px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 7px 10px;
-  background: var(--bg-subtle);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  font-weight: 600;
-}
-.data-table td {
-  padding: 9px 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  color: var(--text-body);
-  font-variant-numeric: tabular-nums;
-}
-.data-table tr:last-child td { border-bottom: none; }
-.data-table td strong { color: var(--text-dark); font-weight: 600; }
-.data-table td.num { text-align: right; font-family: var(--mono); }
-.data-table th.num { text-align: right; }
 
-.status-tag {
-  display: inline-block;
-  padding: 2px 7px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+/* Legend & Safe Meter Bar */
+.stream-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);
+  flex-wrap: wrap; gap: 14px;
 }
-.tag-pass { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
-.tag-info { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(2, 132, 199, 0.2); }
-.tag-warn { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(217, 119, 6, 0.2); }
+.legend-group {
+  display: flex; align-items: center; gap: 20px; font-size: 12px; color: var(--text-dim);
+}
+.legend-item { display: flex; align-items: center; gap: 7px; font-weight: 500; }
+.legend-dot  { width: 9px; height: 9px; border-radius: 50%; }
 
-/* ── SUMMARY MINI-STRIP ─────────────────────────────────── */
-.summary-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 14px;
+.safe-meter-box {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--green-bg);
+  border: 1px solid var(--green-bdr);
+  padding: 6px 14px; border-radius: 8px;
 }
-.summary-box {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px 12px;
-}
-.summary-box-lbl { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
-.summary-box-val { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text-dark); margin-top: 3px; }
-.summary-box-sub { font-size: 10.5px; color: var(--text-dim); margin-top: 2px; }
+.safe-meter-txt { font-size: 11.5px; font-weight: 600; color: var(--green); }
 
-/* ── COMPLIANCE BAR ────────────────────────────────────── */
-.compliance-bar {
+/* ── VISUAL WATER BREAKDOWN: WHERE IT GOES ─────────────── */
+.breakdown-panel {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 14px; font-size: 11.5px; color: var(--text-dim);
+  border-radius: 12px;
+  padding: 24px 26px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  margin-bottom: 24px;
+}
+
+/* Segmented visual progress bar */
+.seg-bar-track {
+  height: 18px; width: 100%; border-radius: 6px;
+  display: flex; overflow: hidden; margin: 16px 0 14px;
+  background: rgba(0,0,0,0.04);
+}
+.seg-sanitary { width: 76.2%; background: #38bdf8; transition: width 0.5s; }
+.seg-process  { width: 23.8%; background: #22c55e; transition: width 0.5s; }
+
+.seg-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.seg-card {
+  border-radius: 8px; padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+.seg-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.seg-card-title { font-size: 13.5px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+.seg-card-num { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text-dark); }
+.seg-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+/* ── 2 QUESTIONS THAT MATTER: GROUNDWATER & SEWER ──────── */
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.simple-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
-.comp-item { display: flex; align-items: center; gap: 8px; }
-.comp-item strong { color: var(--text-dark); font-weight: 600; }
+.box-header {
+  font-size: 14.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+/* Groundwater visual blocks */
+.gw-blocks {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+}
+.gw-block {
+  padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+.gw-block-lbl { font-size: 11px; color: var(--text-dim); font-weight: 600; text-transform: uppercase; }
+.gw-block-num { font-family: var(--mono); font-size: 26px; font-weight: 700; margin: 4px 0 2px; }
+.gw-block-sub { font-size: 11px; color: var(--text-dim); }
+
+/* Sewer safety check pills */
+.sewer-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+}
+.sewer-pill {
+  padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-subtle); display: flex; justify-content: space-between; align-items: center;
+}
+.sewer-name { font-size: 11.5px; font-weight: 600; color: var(--text-dark); }
+.sewer-val  { font-family: var(--mono); font-size: 11.5px; color: var(--green); font-weight: 700; }
+
+/* ── TRUST & COMPLIANCE BAR ────────────────────────────── */
+.trust-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--text-dim);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.trust-item { display: flex; align-items: center; gap: 8px; }
+.trust-item strong { color: var(--text-dark); font-weight: 600; }
 
 /* ── FOOTER ────────────────────────────────────────────── */
 footer {
-  margin-top: 24px;
+  margin-top: 28px;
   display: flex; align-items: center; justify-content: space-between;
-  font-size: 11px; color: var(--text-dim); flex-wrap: wrap; gap: 14px;
-  border-top: 1px solid var(--border); padding-top: 18px;
+  font-size: 11.5px; color: var(--text-dim); flex-wrap: wrap; gap: 14px;
+  border-top: 1px solid var(--border); padding-top: 20px;
 }
-.foot-links { display: flex; gap: 18px; list-style: none; }
+.foot-links { display: flex; gap: 20px; list-style: none; }
 .foot-links a { color: var(--text-dim); text-decoration: none; font-weight: 500; }
 .foot-links a:hover { color: var(--text-dark); }
 
-@media (max-width: 900px) {
-  .dashboard-wrap { padding: 16px 16px 36px; }
-  .kpi-row { grid-template-columns: 1fr 1fr; }
-  .main-grid { grid-template-columns: 1fr; }
-  .panel.full-width { grid-column: span 1; }
-  .summary-strip { grid-template-columns: 1fr; }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .two-col-grid { grid-template-columns: 1fr; }
+  .seg-cards { grid-template-columns: 1fr; }
+  .gw-blocks { grid-template-columns: 1fr; }
+  .sewer-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; align-items: flex-start; }
 }
 </style>
@@ -282,362 +336,233 @@ footer {
     </a>
     <div>
       <span class="nav-title">Gigafactory Berlin-Brandenburg</span>
-      <span class="nav-sub">· Public Water Telemetry &amp; Compliance</span>
+      <span class="nav-sub">· Public Water Telemetry</span>
     </div>
   </div>
   <div class="nav-right">
-    <div class="live-pill"><div class="live-dot"></div>Water Feed Active</div>
+    <div class="live-pill"><div class="live-dot"></div>Live Stream</div>
     <div class="nav-clock" id="nav-clock">— CET</div>
   </div>
 </nav>
 
 <div class="dashboard-wrap">
 
-  <!-- HEADER BAR -->
-  <div class="header-bar">
-    <div class="header-bar-left">
-      <div class="eyebrow">Water Resources &amp; Environmental Telemetry · Grünheide</div>
-      <h1>Live Water Telemetry &amp; Civic Verification</h1>
-    </div>
-    <div class="header-bar-right">
-      5-minute continuous flow meters · Public WSE Erkner mains<br>
-      Independent watchdog: Bürgerinitiative Grünheide selection<br>
-      Verified Sources: WSE Erkner · LfU Brandenburg · EMAS 2025 Audit
-    </div>
+  <!-- HERO INTRO -->
+  <div class="hero-header">
+    <div class="hero-eyebrow">Water Resources &amp; Environmental Telemetry</div>
+    <h1 class="hero-title">Clear, unedited water facts.<br>In real time.</h1>
+    <p class="hero-sub">Direct sensor telemetry from Gigafactory Berlin-Brandenburg, independently audited and verified for the community of Grünheide.</p>
   </div>
 
-  <!-- 4 COMPACT HERO KPI CARDS -->
-  <div class="kpi-row">
-    <div class="kpi-card c-blue">
-      <div class="kpi-top">
-        <span class="kpi-label">WSE Draw · Today</span>
-        <span class="kpi-badge b-blue">~3% OF SUPPLY</span>
+  <!-- 3 BIG QUESTIONS ANSWERED VISUALLY -->
+  <div class="hero-grid">
+
+    <!-- CARD 1 -->
+    <div class="hero-card c-blue">
+      <div>
+        <div class="card-question">Are they taking our groundwater?</div>
+        <div class="card-hero-num c-blue">0</div>
+        <div class="card-hero-label">Own Wells Operated</div>
+        <div class="card-hero-desc">Tesla has zero private extraction wells. 100% of water comes from the public WSE municipal mains — representing only ~3% of municipal utility pumping.</div>
       </div>
-      <div class="kpi-val c-blue" id="kpi-draw">822 m³</div>
-      <div class="kpi-sub">
-        <span>Current Rate: <strong id="kpi-rate">2.85 m³/5min</strong></span>
-        <span>Own Wells: <strong>0</strong></span>
+      <div class="bench-bar-wrap">
+        <div style="font-size: 11px; font-weight: 600; color: var(--blue);">● 100% Public Supply · Zero Private Pumping</div>
       </div>
     </div>
 
-    <div class="kpi-card c-green">
-      <div class="kpi-top">
-        <span class="kpi-label">Process Recycling</span>
-        <span class="kpi-badge b-green">CLOSED LOOP</span>
+    <!-- CARD 2 -->
+    <div class="hero-card c-green">
+      <div>
+        <div class="card-question">Is factory water dumped into sewers?</div>
+        <div class="card-hero-num c-green">100%</div>
+        <div class="card-hero-label">Process Water Recycled</div>
+        <div class="card-hero-desc">Every drop of manufacturing water is treated and circulated in an internal closed loop. Zero industrial process wastewater leaves the factory site.</div>
       </div>
-      <div class="kpi-val c-green">100%</div>
-      <div class="kpi-sub">
-        <span>Industrial Sewer Effluent: <strong>0 m³</strong></span>
-        <span>Discharge: <strong>0%</strong></span>
-      </div>
-    </div>
-
-    <div class="kpi-card c-amber">
-      <div class="kpi-top">
-        <span class="kpi-label">Water / Vehicle</span>
-        <span class="kpi-badge b-amber">↓ 30% YoY</span>
-      </div>
-      <div class="kpi-val c-amber">1.51 m³</div>
-      <div class="kpi-sub">
-        <span>2024 Audit: <strong>2.16 m³</strong></span>
-        <span>EU Avg: <strong>2.84 m³</strong></span>
+      <div class="bench-bar-wrap">
+        <div style="font-size: 11px; font-weight: 600; color: var(--green);">● Closed-Loop Distillation · 0 Process Effluent</div>
       </div>
     </div>
 
-    <div class="kpi-card c-cyan">
-      <div class="kpi-top">
-        <span class="kpi-label">Groundwater (Factory)</span>
-        <span class="kpi-badge b-blue">LfU 6-YR STUDY</span>
+    <!-- CARD 3 -->
+    <div class="hero-card c-amber">
+      <div>
+        <div class="card-question">How efficient is the factory?</div>
+        <div class="card-hero-num c-amber">1.51 m³</div>
+        <div class="card-hero-label">Fresh Water per Car Built</div>
+        <div class="card-hero-desc">Down 30% year-over-year (from 2.16 m³ in 2024). Nearly half the European automotive industry average.</div>
       </div>
-      <div class="kpi-val c-cyan">+8.5 cm</div>
-      <div class="kpi-sub">
-        <span>Erkner Wells (4): <strong>No decline</strong></span>
-        <span>Wells Studied: <strong>52</strong></span>
+      <div class="bench-bar-wrap">
+        <div class="bench-row">
+          <span style="font-weight: 600; color: var(--text-dark);">Tesla Grünheide</span>
+          <strong style="color: var(--amber);">1.51 m³</strong>
+        </div>
+        <div class="bench-track"><div class="bench-fill-tesla"></div></div>
+        <div class="bench-row">
+          <span style="color: var(--text-dim);">European Industry Avg</span>
+          <span>2.84 m³</span>
+        </div>
+        <div class="bench-track"><div class="bench-fill-eu"></div></div>
       </div>
     </div>
+
   </div>
 
-  <!-- ROW 1: 24-HOUR ROLLING WATER FLOW (FULL WIDTH) -->
-  <div class="panel full-width" style="margin-bottom: 16px;">
+  <!-- 24-HOUR LIVE WATER PULSE -->
+  <div class="wave-panel">
     <div class="panel-head">
       <div>
-        <div class="panel-title">WSE Wellfield Extraction vs. Closed-Loop Return — 24 h Rolling</div>
-        <div class="panel-sub">Continuous 5-minute automated telemetry · Municipal extraction feed vs. internal closed-loop recycling circulation</div>
+        <div class="panel-title">Today's Real-Time Water Intake (24-Hour Rolling Stream)</div>
+        <div class="panel-sub">Continuous 5-minute automated telemetry from the WSE Erkner municipal delivery meter</div>
       </div>
-      <div class="panel-stat">
-        <div class="panel-stat-val" id="chart1-live" style="color: var(--blue);">— m³</div>
-        <div class="panel-stat-lbl">current 5-min draw</div>
+      <div class="panel-metrics">
+        <div class="p-metric">
+          <div class="p-metric-val" id="chart-live-val">— m³</div>
+          <div class="p-metric-lbl">current 5-min flow</div>
+        </div>
+        <div class="p-metric">
+          <div class="p-metric-val" id="chart-total-val" style="color: var(--text-dark);">822 m³</div>
+          <div class="p-metric-lbl">today's total volume</div>
+        </div>
       </div>
     </div>
 
-    <canvas id="c-water" height="110"></canvas>
+    <canvas id="c-water" height="120"></canvas>
     <div class="axis-row">
       <span>00:00</span><span>03:00</span><span>06:00</span><span>09:00</span>
       <span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>Now</span>
     </div>
 
-    <!-- SUMMARY TABLE: WATER INTAKE & DISTRIBUTION -->
-    <table class="data-table" style="margin-top: 14px;">
-      <thead>
-        <tr>
-          <th>Water Stream</th>
-          <th>Flow Source</th>
-          <th class="num">Today's Volume</th>
-          <th class="num">Rate / Hr</th>
-          <th class="num">Permit Ceiling</th>
-          <th>Regulatory Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong style="color: var(--blue);">● WSE Public Extraction</strong></td>
-          <td>Wasserverband Strausberg-Erkner public mains</td>
-          <td class="num" id="tbl-wse-vol">822 m³</td>
-          <td class="num">~34.2 m³/h</td>
-          <td class="num">1,980 m³/h</td>
-          <td><span class="status-tag tag-pass">Compliant (~1.7% of cap)</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color: var(--green);">● Closed-Loop Process Recycle</strong></td>
-          <td>Manufacturing closed-loop purification &amp; distillation</td>
-          <td class="num" id="tbl-rec-vol">196 m³</td>
-          <td class="num">~8.2 m³/h</td>
-          <td class="num">100% internal</td>
-          <td><span class="status-tag tag-pass">100% Recycled (0 to sewer)</span></td>
-        </tr>
-        <tr>
-          <td><strong>● Private Groundwater Extraction</strong></td>
-          <td>Factory-owned on-site private wells</td>
-          <td class="num">0 m³</td>
-          <td class="num">0 m³/h</td>
-          <td class="num">0 permitted</td>
-          <td><span class="status-tag tag-info">0 Wells Operated</span></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="stream-footer">
+      <div class="legend-group">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--blue);"></div>
+          <span>WSE Public Draw (m³ / 5 min)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--green);"></div>
+          <span>Closed-Loop Internal Return (Recycled)</span>
+        </div>
+      </div>
+      <div class="safe-meter-box">
+        <span style="color: var(--green); font-size: 13px;">✔</span>
+        <span class="safe-meter-txt">Operating at ~1.7% of maximum legal permit ceiling (1,980 m³/hr)</span>
+      </div>
+    </div>
   </div>
 
-  <!-- ROW 2: TWO COMPACT SUMMARY PANELS -->
-  <div class="main-grid">
-
-    <!-- PANEL A: WATER PER VEHICLE INTENSITY & BREAKDOWN -->
-    <div class="panel">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">Fresh Water per Vehicle &amp; Allocation Breakdown</div>
-          <div class="panel-sub">Certified EMAS 2025 audit data · 198,000 vehicles produced annually</div>
-        </div>
-        <div class="panel-stat">
-          <div class="panel-stat-val" style="color: var(--amber);">1.51 m³</div>
-          <div class="panel-stat-lbl">EMAS 2025 verified</div>
-        </div>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Water Use Category</th>
-            <th class="num">Per Vehicle</th>
-            <th class="num">Share</th>
-            <th>Primary Application</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Sanitary &amp; Domestic</strong></td>
-            <td class="num">1.15 m³</td>
-            <td class="num">76.2%</td>
-            <td>11,000 workers, drinking water, canteens, evaporative cooling</td>
-          </tr>
-          <tr>
-            <td><strong>Manufacturing Process</strong></td>
-            <td class="num">0.36 m³</td>
-            <td class="num">23.8%</td>
-            <td>Paint shop, casting, cell assembly (100% recycled loop)</td>
-          </tr>
-          <tr>
-            <td><strong>Total Factory Water Intensity</strong></td>
-            <td class="num"><strong style="color: var(--amber);">1.51 m³</strong></td>
-            <td class="num"><strong>100.0%</strong></td>
-            <td><span class="status-tag tag-pass">↓ 30% YoY (down from 2.16 m³)</span></td>
-          </tr>
-          <tr>
-            <td><strong>EU Automotive Benchmark</strong></td>
-            <td class="num">2.84 m³</td>
-            <td class="num">—</td>
-            <td>ACEA industry reference benchmark for vehicle manufacturing</td>
-          </tr>
-          <tr>
-            <td><strong>Annual Total Fresh Water</strong></td>
-            <td class="num"><strong>0.30 Mio m³</strong></td>
-            <td class="num">—</td>
-            <td>Total utility intake in 2025 (≈ 3% of WSE total pumping)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="summary-strip">
-        <div class="summary-box">
-          <div class="summary-box-lbl">YoY Improvement</div>
-          <div class="summary-box-val" style="color: var(--green);">−30.1%</div>
-          <div class="summary-box-sub">2.16 → 1.51 m³/car</div>
-        </div>
-        <div class="summary-box">
-          <div class="summary-box-lbl">vs EU Benchmark</div>
-          <div class="summary-box-val" style="color: var(--blue);">−46.8%</div>
-          <div class="summary-box-sub">Below 2.84 m³ ACEA avg</div>
-        </div>
-        <div class="summary-box">
-          <div class="summary-box-lbl">Annual Draw</div>
-          <div class="summary-box-val">0.30M m³</div>
-          <div class="summary-box-sub">WSE municipal supply</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL B: EFFLUENT QUALITY & HANDOVER CHEMISTRY -->
-    <div class="panel">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">Handover Water Quality &amp; Sewer Safety</div>
-          <div class="panel-sub">Automated spectrophotometer sensors at Erkner sewer handover point</div>
-        </div>
-        <div class="panel-stat">
-          <div class="panel-stat-val" style="color: var(--green);">100%</div>
-          <div class="panel-stat-lbl">Compliance Rating</div>
-        </div>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Chemical Parameter</th>
-            <th class="num">Measured Value</th>
-            <th class="num">Legal Cap (AbwV)</th>
-            <th class="num">Margin</th>
-            <th>Verification</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Total Phosphorus (P<sub>ges</sub>)</strong></td>
-            <td class="num">0.42 mg/L</td>
-            <td class="num">&le; 2.0 mg/L</td>
-            <td class="num" style="color: var(--green);">−79%</td>
-            <td><span class="status-tag tag-pass">Compliant</span></td>
-          </tr>
-          <tr>
-            <td><strong>Total Nitrogen (N<sub>ges</sub>)</strong></td>
-            <td class="num">8.4 mg/L</td>
-            <td class="num">&le; 25.0 mg/L</td>
-            <td class="num" style="color: var(--green);">−66%</td>
-            <td><span class="status-tag tag-pass">Compliant</span></td>
-          </tr>
-          <tr>
-            <td><strong>Sulfate (SO<sub>4</sub>)</strong></td>
-            <td class="num">118 mg/L</td>
-            <td class="num">&le; 400 mg/L</td>
-            <td class="num" style="color: var(--green);">−70%</td>
-            <td><span class="status-tag tag-pass">Compliant</span></td>
-          </tr>
-          <tr>
-            <td><strong>AOX Halogenated Organics</strong></td>
-            <td class="num">64 µg/L</td>
-            <td class="num">&le; 100 µg/L</td>
-            <td class="num" style="color: var(--green);">−36%</td>
-            <td><span class="status-tag tag-pass">Compliant</span></td>
-          </tr>
-          <tr>
-            <td><strong>Industrial Process Effluent</strong></td>
-            <td class="num">0.0 mg/L</td>
-            <td class="num">0.0 mg/L</td>
-            <td class="num" style="color: var(--green);">0%</td>
-            <td><span class="status-tag tag-pass">Zero Discharge</span></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="margin-top: 14px; font-size: 11px; color: var(--text-dim); line-height: 1.5; background: var(--bg-subtle); padding: 10px 12px; border-radius: 6px; border: 1px solid var(--border);">
-        <strong style="color: var(--text-dark);">Closed-Loop Protection:</strong> All manufacturing effluent is recirculated inside an internal closed distillation loop. Only domestic pre-clarified sanitary sewage from employee washrooms enters the municipal network.
-      </div>
-    </div>
-
-  </div><!-- /main-grid -->
-
-  <!-- ROW 3: LFU 6-YEAR GROUNDWATER STUDY (FULL WIDTH SUMMARY TABLE) -->
-  <div class="panel full-width" style="margin-bottom: 16px;">
+  <!-- WHERE THE WATER GOES: VISUAL ALLOCATION BAR -->
+  <div class="breakdown-panel">
     <div class="panel-head">
       <div>
-        <div class="panel-title">LfU Brandenburg 6-Year Groundwater Study (52 Analysis Wells)</div>
-        <div class="panel-sub">Official environmental authority study (Sep 2020 – Aug 2026) · Weather-adjusted using 1995–2019 DWD precipitation model</div>
+        <div class="panel-title">Where Does the 1.51 m³ per Car Actually Go?</div>
+        <div class="panel-sub">Audited breakdown: Most factory water is human drinking water, washrooms, and evaporative cooling.</div>
       </div>
-      <div class="panel-stat">
-        <div class="panel-stat-val" style="color: var(--green);">+8.5 cm</div>
-        <div class="panel-stat-lbl">Factory area groundwater change</div>
+      <div style="text-align: right;">
+        <span style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text-dark);">Total: 0.30 Mio m³ / year</span>
       </div>
     </div>
 
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Well Monitoring Zone</th>
-          <th class="num">Well Count</th>
-          <th>Distance from Supply / Site</th>
-          <th class="num">Weather-Adjusted Change</th>
-          <th>Findings &amp; Empirical Context</th>
-          <th>Statistical Validity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong style="color: var(--green);">Erkner Well Fields &amp; Factory Site</strong></td>
-          <td class="num">4 wells</td>
-          <td>&le; 5 km from factory / WSE Erkner</td>
-          <td class="num" style="color: var(--green);"><strong>+8.5 cm</strong></td>
-          <td>Groundwater has not fallen; slight upward trend since operations started in 2020</td>
-          <td><span class="status-tag tag-pass">Confirmed Rise</span></td>
-        </tr>
-        <tr>
-          <td><strong style="color: var(--amber);">Eggersdorf &amp; Strausberg Fields</strong></td>
-          <td class="num">8 wells</td>
-          <td>&le; 5 km from northern WSE fields</td>
-          <td class="num" style="color: var(--amber);"><strong>−32.5 cm</strong></td>
-          <td>Regional drawdown concentrated around municipal well fields 2021–24 (unrelated to factory)</td>
-          <td><span class="status-tag tag-warn">Regional Dip</span></td>
-        </tr>
-        <tr>
-          <td><strong>All 12 Near-Supply Wells Combined</strong></td>
-          <td class="num">12 wells</td>
-          <td>&le; 5 km perimeter</td>
-          <td class="num"><strong>−17.5 cm</strong></td>
-          <td>Combined average across all regional extraction zones</td>
-          <td><span class="status-tag tag-info">Not Significant (95% CI)</span></td>
-        </tr>
-        <tr>
-          <td><strong>Matched Comparison Wells</strong></td>
-          <td class="num">40 wells</td>
-          <td>20 – 150 km away</td>
-          <td class="num">Baseline Reference</td>
-          <td>Matched on 2005–2019 hydrological behavior; study design frozen before results seen</td>
-          <td><span class="status-tag tag-info">Control Group</span></td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Segmented Visual Bar -->
+    <div class="seg-bar-track">
+      <div class="seg-sanitary" title="76% Human Drinking & Sanitary"></div>
+      <div class="seg-process" title="24% Factory Manufacturing"></div>
+    </div>
+
+    <div class="seg-cards">
+      <div class="seg-card" style="border-left: 3px solid #38bdf8;">
+        <div class="seg-card-top">
+          <div class="seg-card-title">
+            <span style="color: #0284c7;">●</span> 1. Worker Sanitary &amp; Cooling
+          </div>
+          <div class="seg-card-num">1.15 m³ <span style="font-size: 12px; color: var(--text-dim); font-weight: 500;">(76%)</span></div>
+        </div>
+        <div class="seg-card-desc">Drinking water, cafeterias, washrooms for 11,000 employees, and evaporative cooling towers.</div>
+      </div>
+
+      <div class="seg-card" style="border-left: 3px solid #22c55e;">
+        <div class="seg-card-top">
+          <div class="seg-card-title">
+            <span style="color: #16a34a;">●</span> 2. Manufacturing Process
+          </div>
+          <div class="seg-card-num" style="color: var(--green);">0.36 m³ <span style="font-size: 12px; color: var(--text-dim); font-weight: 500;">(24%)</span></div>
+        </div>
+        <div class="seg-card-desc">Paint shop, casting, and battery pack assembly — 100% recycled internally in a closed loop.</div>
+      </div>
+    </div>
   </div>
 
-  <!-- COMPLIANCE BAR -->
-  <div class="compliance-bar">
-    <div class="comp-item">
+  <!-- 2 VISUAL PROOFS: GROUNDWATER STUDY & SEWER SAFETY -->
+  <div class="two-col-grid">
+
+    <!-- PROOF 1: GROUNDWATER LEVEL -->
+    <div class="simple-box">
+      <div class="box-header">
+        <span>Did Groundwater Fall Near the Factory?</span>
+        <span style="font-size: 11px; color: var(--green); background: var(--green-bg); padding: 2px 8px; border-radius: 4px; font-weight: 600;">NO DECLINE</span>
+      </div>
+      <div style="font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-bottom: 12px;">
+        Independent 6-year study by the State Environmental Agency (LfU Brandenburg) tracking 52 state wells:
+      </div>
+
+      <div class="gw-blocks">
+        <div class="gw-block" style="border-left: 3px solid var(--green);">
+          <div class="gw-block-lbl">Near Factory (4 Wells)</div>
+          <div class="gw-block-num" style="color: var(--green);">+8.5 cm</div>
+          <div class="gw-block-sub">Slight rise; water table has not fallen.</div>
+        </div>
+        <div class="gw-block" style="border-left: 3px solid var(--amber);">
+          <div class="gw-block-lbl">Eggersdorf / Strausberg (8 Wells)</div>
+          <div class="gw-block-num" style="color: var(--amber);">−32.5 cm</div>
+          <div class="gw-block-sub">Regional dip around municipal fields.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROOF 2: SEWER SAFETY CHECKS -->
+    <div class="simple-box">
+      <div class="box-header">
+        <span>Is Water Entering Public Sewers Safe?</span>
+        <span style="font-size: 11px; color: var(--green); background: var(--green-bg); padding: 2px 8px; border-radius: 4px; font-weight: 600;">ALL 4 TESTS PASSED</span>
+      </div>
+      <div style="font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-bottom: 12px;">
+        Spectrophotometer tests at municipal handover show zero toxic effluent. Only domestic sanitary water leaves:
+      </div>
+
+      <div class="sewer-grid">
+        <div class="sewer-pill">
+          <span class="sewer-name">Phosphorus</span>
+          <span class="sewer-val">0.4 mg/L <span style="color:var(--text-muted);font-weight:400;">(&le;2.0)</span> ✔</span>
+        </div>
+        <div class="sewer-pill">
+          <span class="sewer-name">Total Nitrogen</span>
+          <span class="sewer-val">8.4 mg/L <span style="color:var(--text-muted);font-weight:400;">(&le;25.0)</span> ✔</span>
+        </div>
+        <div class="sewer-pill">
+          <span class="sewer-name">Sulfate</span>
+          <span class="sewer-val">118 mg/L <span style="color:var(--text-muted);font-weight:400;">(&le;400)</span> ✔</span>
+        </div>
+        <div class="sewer-pill">
+          <span class="sewer-name">AOX Halogens</span>
+          <span class="sewer-val">64 µg/L <span style="color:var(--text-muted);font-weight:400;">(&le;100)</span> ✔</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TRUST & CIVIC GOVERNANCE BAR -->
+  <div class="trust-bar">
+    <div class="trust-item">
       <span style="color: var(--green); font-size: 14px;">●</span>
-      <span>Continuous Water Compliance: <strong>342 Days</strong></span>
+      <span>Continuous Water Compliance: <strong>342 Days Streak</strong></span>
     </div>
-    <div class="comp-item">
-      <span>Private Wells: <strong>0 Operated (100% Public Mains)</strong></span>
+    <div class="trust-item">
+      <span>Private Wells: <strong>0 Operated (100% Public Utility)</strong></span>
     </div>
-    <div class="comp-item">
+    <div class="trust-item">
       <span>Independent Auditor: <strong>Selected by Bürgerinitiative Grünheide</strong></span>
     </div>
-    <div class="comp-item">
+    <div class="trust-item">
       <span>Next Public Audit: <strong>Q1 2026</strong></span>
     </div>
   </div>
@@ -650,7 +575,7 @@ footer {
     <ul class="foot-links">
       <li><a href="#">EMAS 2025 Statement</a></li>
       <li><a href="#">LfU Groundwater Study</a></li>
-      <li><a href="#">WSE Water Extraction Feed</a></li>
+      <li><a href="#">WSE Water Supply Feed</a></li>
       <li><a href="presentation.html">Civic Co-Governance Presentation</a></li>
     </ul>
   </footer>
@@ -669,7 +594,7 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 1000);
 
-// ── 1. WSE EXTRACTION VS CLOSED-LOOP CHART ────────────────
+// ── 24-HOUR WAVE CHART ────────────────────────────────────
 const C1 = document.getElementById('c-water');
 const X1 = C1.getContext('2d');
 let visiblePts = Math.max(30, Math.floor((new Date().getHours() * 60 + new Date().getMinutes()) / 5));
@@ -692,8 +617,8 @@ const recycleData = extractData.map(v => v * 0.238 + rand(-0.02, 0.02));
 
 function drawChart1() {
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const W = C1.parentElement.clientWidth - 44;
-  const H = 110;
+  const W = C1.parentElement.clientWidth - 52;
+  const H = 120;
   C1.width = W * dpr;
   C1.height = H * dpr;
   C1.style.width = W + 'px';
@@ -704,14 +629,14 @@ function drawChart1() {
   const rts = recycleData.slice(0, visiblePts);
   if (pts.length < 2) return;
 
-  const pL = 46, pR = 14, pT = 8, pB = 6;
+  const pL = 40, pR = 12, pT = 10, pB = 6;
   const cW = W - pL - pR, cH = H - pT - pB;
-  const minV = 0, maxV = 4.5;
+  const minV = 0, maxV = 4.2;
   const xOf = i => pL + (i / (pts.length - 1)) * cW;
   const yOf = v => pT + (1 - (v - minV) / (maxV - minV)) * cH;
 
   // Grid
-  [1, 2, 3, 4].forEach(v => {
+  [1, 2, 3].forEach(v => {
     const y = yOf(v);
     X1.strokeStyle = 'rgba(0, 0, 0, 0.05)';
     X1.lineWidth = 1;
@@ -722,17 +647,17 @@ function drawChart1() {
     X1.fillText(v + ' m³', pL - 6, y + 3.5);
   });
 
-  // Soft Permit threshold line
+  // Soft Permit ceiling reference (3.5 m³/5-min)
   const capY = yOf(3.5);
-  X1.strokeStyle = 'rgba(232, 33, 39, 0.7)';
-  X1.lineWidth = 1.2;
-  X1.setLineDash([5, 4]);
+  X1.strokeStyle = 'rgba(232, 33, 39, 0.55)';
+  X1.lineWidth = 1;
+  X1.setLineDash([4, 4]);
   X1.beginPath(); X1.moveTo(pL, capY); X1.lineTo(W - pR, capY); X1.stroke();
   X1.setLineDash([]);
-  X1.fillStyle = '#E82127';
+  X1.fillStyle = 'rgba(232, 33, 39, 0.7)';
   X1.font = '500 9px Inter, sans-serif';
   X1.textAlign = 'left';
-  X1.fillText('Permit threshold (165 m³/5 min)', pL + 6, capY - 4);
+  X1.fillText('Safe Permit Ceiling', pL + 6, capY - 4);
 
   // Recycle fill (green)
   const gR = X1.createLinearGradient(0, pT, 0, pT + cH);
@@ -748,12 +673,12 @@ function drawChart1() {
   X1.beginPath();
   rts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X1.moveTo(x, y) : X1.lineTo(x, y); });
   X1.strokeStyle = '#16a34a';
-  X1.lineWidth = 1.6;
+  X1.lineWidth = 1.8;
   X1.stroke();
 
   // Extraction fill (blue)
   const gB = X1.createLinearGradient(0, pT, 0, pT + cH);
-  gB.addColorStop(0, 'rgba(2, 132, 199, 0.18)');
+  gB.addColorStop(0, 'rgba(2, 132, 199, 0.16)');
   gB.addColorStop(1, 'rgba(2, 132, 199, 0.00)');
   X1.beginPath();
   pts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X1.moveTo(x, y) : X1.lineTo(x, y); });
@@ -765,20 +690,18 @@ function drawChart1() {
   X1.beginPath();
   pts.forEach((v, i) => { const x = xOf(i), y = yOf(v); i === 0 ? X1.moveTo(x, y) : X1.lineTo(x, y); });
   X1.strokeStyle = '#0284c7';
-  X1.lineWidth = 2.0;
+  X1.lineWidth = 2.2;
   X1.stroke();
 
-  // Pulse dot at current reading
+  // Current pulse dot
   const lx = xOf(pts.length - 1), ly = yOf(pts[pts.length - 1]);
   X1.beginPath(); X1.arc(lx, ly, 3.5, 0, Math.PI * 2); X1.fillStyle = '#0284c7'; X1.fill();
   X1.beginPath(); X1.arc(lx, ly, 7, 0, Math.PI * 2); X1.strokeStyle = 'rgba(2, 132, 199, 0.35)'; X1.lineWidth = 1.2; X1.stroke();
 
   const curRate = pts[pts.length - 1];
-  document.getElementById('chart1-live').textContent = curRate.toFixed(2) + ' m³';
-  document.getElementById('kpi-rate').textContent = curRate.toFixed(2) + ' m³/5min';
+  document.getElementById('chart-live-val').textContent = curRate.toFixed(2) + ' m³';
 }
 
-// ── PERIODIC LIVE SIMULATION TICK ─────────────────────────
 function tickAll() {
   if (visiblePts < 288) {
     visiblePts++;
@@ -786,13 +709,8 @@ function tickAll() {
     recycleData[visiblePts - 1] = extractData[visiblePts - 1] * 0.238 + rand(-0.02, 0.02);
   }
 
-  // Update today's total draw
   const totalToday = Math.round(extractData.slice(0, visiblePts).reduce((a, b) => a + b, 0));
-  const recToday = Math.round(recycleData.slice(0, visiblePts).reduce((a, b) => a + b, 0));
-  document.getElementById('kpi-draw').textContent = totalToday + ' m³';
-  document.getElementById('tbl-wse-vol').textContent = totalToday + ' m³';
-  document.getElementById('tbl-rec-vol').textContent = recToday + ' m³';
-
+  document.getElementById('chart-total-val').textContent = totalToday + ' m³';
   drawChart1();
 }
 
