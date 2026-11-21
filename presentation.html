@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Good Neighbour Tesla · Grünheide Until 2035 (Steve Jobs Keynote · 4 Slides)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-deep: #050811;
+  --bg-card: #0b1120;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --tesla-red: #e82127;
+  --cyan: #38bdf8;
+  --emerald: #10b981;
+  --amber: #f59e0b;
+  --purple: #a855f7;
+  --text-white: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+html, body {
+  background: #020409;
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  user-select: none;
+}
+
+.deck-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #0a1122 0%, #020409 100%);
+}
+
+.slide-frame {
+  position: relative;
+  width: 1333px;
+  height: 750px;
+  max-width: 98vw;
+  max-height: 94vh;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(56, 189, 248, 0.06);
+  padding: 40px 50px;
+  overflow: hidden;
+  display: none;
+  animation: slideFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-frame.active {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.slide-header {
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.act-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.act-tag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.slide-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.slide-subtitle {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.slide-content {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.card-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.card-box:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.card-bullet {
+  margin-bottom: 14px;
+}
+
+.card-bullet-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.card-bullet-desc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.snip-container {
+  flex: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  position: relative;
+  display: flex;
+}
+
+.snip-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.snip-overlay-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(3, 105, 161, 0.9);
+  color: #fff;
+  border: 1px solid #38bdf8;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.snip-overlay-btn:hover {
+  background: #0284c7;
+}
+
+.deck-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(11, 17, 32, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-medium);
+  border-radius: 30px;
+  padding: 7px 18px;
+  z-index: 1000;
+}
+
+.deck-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.deck-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.deck-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cyan);
+  font-weight: 700;
+  padding: 0 8px;
+}
+
+@media print {
+  body, html {
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #050811 !important;
+    color: #ffffff !important;
+  }
+  .deck-container {
+    display: block !important;
+    height: auto !important;
+    width: 100% !important;
+    background: none !important;
+  }
+  .slide-frame {
+    display: flex !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    width: 100% !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 30px 40px !important;
+    box-sizing: border-box !important;
+  }
+  .deck-controls, .snip-overlay-btn {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="deck-container">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SLIDE 1: THE CRISIS & THE EPIPHANY
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="slide-frame active" id="slide-1">
+    <div class="slide-header">
+      <div class="act-tag" style="color: var(--tesla-red);">GOOD NEIGHBOUR TESLA · GRÜNHEIDE UNTIL 2035</div>
+      <div class="slide-title">Why 65% Voted NO — And Why Corporate PR Failed.</div>
+      <div class="slide-subtitle">“You cannot PR your way out of a trust crisis. You must surrender control to the truth.”</div>
+    </div>
+    <div class="slide-content">
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--amber);">
+        <div class="card-title" style="color: var(--amber);">1. THE CITIZEN PERCEPTION</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">74% Fear Water Scarcity</div>
+          <div class="card-bullet-desc">Residents believe Gigafactory operations are draining local lakes and dropping residential well tables.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">68% Fear Wastewater Toxicity</div>
+          <div class="card-bullet-desc">Viral community rumors of toxic chemicals, phosphorus, and halogens entering municipal sewers.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">81% Distrust Corporate PR</div>
+          <div class="card-bullet-desc">Community sees company-sponsored brochures, open houses, and press releases as corporate whitewash.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--tesla-red);">
+        <div class="card-title" style="color: var(--tesla-red);">2. WHY PAST OUTREACH FAILED</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">The Info Center in Town</div>
+          <div class="card-bullet-desc">Felt like a one-way sales booth rather than a transparent mechanism for true civic accountability.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">State Ministerial Clout</div>
+          <div class="card-bullet-desc">Leveraging Potsdam ministries alienated residents, making them feel bypassed and disenfranchised.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Retrospective Annual PDFs</div>
+          <div class="card-bullet-desc">Glossy reports published months after the fact cannot disprove active rumors in real time.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--emerald);">
+        <div class="card-title" style="color: var(--emerald);">3. THE EMPIRICAL REALITY</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">0 Own Wells · ≈3% of Supply</div>
+          <div class="card-bullet-desc">Tesla operates 0 private wells. 100% of supply comes from public WSE mains, totaling ~3% of WSE draw.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">100% Process Water Recycled</div>
+          <div class="card-bullet-desc">Zero industrial effluent enters municipal sewers. Only domestic sanitary water from 11,000 workers.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">+8.5 cm Groundwater Gain</div>
+          <div class="card-bullet-desc">Independent LfU 52-well study proves groundwater near the factory did NOT fall (+8.5 cm over 6 years).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SLIDE 2: PILLAR 1: 24/7 LIVE DASHBOARD (WITH SNIP)
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="slide-frame" id="slide-2">
+    <div class="slide-header">
+      <div class="act-tag" style="color: var(--cyan);">PILLAR 1 · RADICAL TRANSPARENCY</div>
+      <div class="slide-title">1. The Glass Pipeline: 24/7 Live Telemetry.</div>
+      <div class="slide-subtitle">“If you have nothing to hide, you broadcast everything.”</div>
+    </div>
+    <div class="slide-content">
+      <!-- Left: 3 Simple Hero Stats -->
+      <div class="card-box" style="width: 440px; flex-shrink: 0; border-top: 3px solid var(--cyan); display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 32px; font-weight: 800; color: var(--cyan); letter-spacing: -0.02em;">0 Own Wells</div>
+          <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-top: 2px;">≈3% of Local Municipal Supply</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.45; margin-top: 4px;">Tesla operates 0 private wells. All fresh water comes from WSE public mains, representing only ~3% of utility draw.</div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;">
+          <div style="font-family: var(--font-mono); font-size: 32px; font-weight: 800; color: var(--emerald); letter-spacing: -0.02em;">100% Recycled</div>
+          <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-top: 2px;">Zero Factory Effluent</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.45; margin-top: 4px;">Every single drop of manufacturing process water is recycled inside a closed loop. Zero factory wastewater enters local sewers.</div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;">
+          <div style="font-family: var(--font-mono); font-size: 32px; font-weight: 800; color: var(--amber); letter-spacing: -0.02em;">1.51 m³ / Car</div>
+          <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-top: 2px;">Down 33% in One Year</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.45; margin-top: 4px;">Fresh water per car dropped from 2.16 to 1.51 m³ (industry avg: 2.84 m³). Most of this is sanitary drinking water for 11,000 workers.</div>
+        </div>
+      </div>
+
+      <!-- Right: Embedded High-Res Dashboard Snip -->
+      <div class="snip-container">
+        <img src="dashboard_snip.png" alt="Tesla Giga Berlin 24/7 Environmental Telemetry Dashboard">
+        <div style="position: absolute; bottom: 12px; left: 16px; font-size: 11px; font-weight: 700; color: var(--cyan); background: rgba(5,8,17,0.85); padding: 5px 10px; border-radius: 6px; border: 1px solid rgba(56,189,248,0.3);">▲ Live, unedited, on every smartphone in Grünheide.</div>
+        <a href="tesla-berlin-dashboard.html" target="_blank" class="snip-overlay-btn">↗ Open Interactive Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SLIDE 3: PILLAR 2: RESIDENT-CHOSEN INDEPENDENT AGENCY
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="slide-frame" id="slide-3">
+    <div class="slide-header">
+      <div class="act-tag" style="color: var(--emerald);">PILLAR 2 · INDEPENDENT CIVIC RATING</div>
+      <div class="slide-title">2. The Citizen's Mandate: Resident-Chosen Agency</div>
+      <div class="slide-subtitle">Taking environmental oversight out of Tesla’s hands and placing it into the hands of Grünheide.</div>
+    </div>
+    <div class="slide-content">
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--cyan);">
+        <div class="card-title" style="color: var(--cyan);">CITIZEN SELECTION & TENDER</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Bürgerinitiative Direct Tender</div>
+          <div class="card-bullet-desc">The auditing environmental agency is selected, tendered, and contracted solely by Bürgerinitiative Grünheide and municipality delegates.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">No Corporate Shortlist</div>
+          <div class="card-bullet-desc">Tesla has zero veto power over the chosen firm. The community decides who inspects Tesla.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Accredited Forensic Specialists</div>
+          <div class="card-bullet-desc">Independent firms like AEMS (Association of Environmental Monitoring Specialists) and TÜV Rheinland holding ISO/IEC 17025 certification.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--emerald);">
+        <div class="card-title" style="color: var(--emerald);">IRREVOCABLE ESCROW TRUST</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">5-Year Ring-Fenced Escrow</div>
+          <div class="card-bullet-desc">Tesla pre-funds a 5-year legally ring-fenced escrow account administered by an independent legal trustee.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Zero Financial Leverage</div>
+          <div class="card-bullet-desc">The auditor is paid directly from the trust. Tesla cannot withhold payment or terminate contracts over unfavorable data.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Legal Indemnification</div>
+          <div class="card-bullet-desc">Auditors are legally bound to full public disclosure without non-disclosure agreements or corporate pre-screening.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--purple);">
+        <div class="card-title" style="color: var(--purple);">TAMPER-PROOF DATA CUSTODY</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Independent Telemetry Probes</div>
+          <div class="card-bullet-desc">Wastewater and flow sensors at the Erkner handover point are keyed directly to agency cloud servers.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Cryptographic SHA-256 Chain</div>
+          <div class="card-bullet-desc">Raw 5-minute telemetry streams are hashed and committed to a public immutable log.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Citizen Master Keys</div>
+          <div class="card-bullet-desc">Community delegates hold cryptographically signed master keys to inspect unedited sensor logs at any time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SLIDE 4: PILLAR 3: QUARTERLY AUDITS & 2035 HORIZON
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="slide-frame" id="slide-4">
+    <div class="slide-header">
+      <div class="act-tag" style="color: var(--amber);">PILLAR 3 & THE 2035 HORIZON</div>
+      <div class="slide-title">3. Proof in Every Mailbox · Good Neighbour Until 2035</div>
+      <div class="slide-subtitle">Closing the generational digital divide with unedited paper reports and a 10-year civic compact.</div>
+    </div>
+    <div class="slide-content">
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--amber);">
+        <div class="card-title" style="color: var(--amber);">UNANNOUNCED RECALIBRATION</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Quarterly Sensor Calibration</div>
+          <div class="card-bullet-desc">Accredited technicians physically test flow meters (±0.15% accuracy) and spectrophotometers (±0.38% tolerance) every 90 days.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Random Community Sampling</div>
+          <div class="card-bullet-desc">Citizen oversight delegates hold legal rights to initiate up to 4 unannounced physical grab samplings per year.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Split-Sample Lab Verification</div>
+          <div class="card-bullet-desc">Wastewater samples are split: one half tested by the citizen-chosen agency, one half by state LfU laboratories.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--emerald);">
+        <div class="card-title" style="color: var(--emerald);">THE PRINTED MAILBOX REPORT</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Physical Mail Delivery</div>
+          <div class="card-bullet-desc">Every 90 days, a printed forensic report is physically delivered to every residential mailbox in Grünheide and Fangschleuse (9,200 homes).</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Bridging the Digital Divide</div>
+          <div class="card-bullet-desc">Senior residents who do not view online dashboards receive unedited physical proof holding legal certifications.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">Plain German & Raw Data</div>
+          <div class="card-bullet-desc">Two-tier report: front page executive summary in clear German, followed by certified raw telemetry tables and signatures.</div>
+        </div>
+      </div>
+
+      <div class="card-box" style="flex: 1; border-top: 3px solid var(--cyan);">
+        <div class="card-title" style="color: var(--cyan);">THE 2035 CIVIC HORIZON</div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">2026–2028: Truth Foundation</div>
+          <div class="card-bullet-desc">Live Glass Pipeline active, citizen agency monitoring live, shifting community approval from 35% to &gt;65%.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">2029–2031: Aquifer Symbiosis</div>
+          <div class="card-bullet-desc">70% rail freight achieved; Tesla funds infiltration basins returning 110% of drawn water to Spree aquifer.</div>
+        </div>
+        <div class="card-bullet">
+          <div class="card-bullet-title">2032–2035: European Benchmark</div>
+          <div class="card-bullet-desc">100% circular water autonomy; Good Neighbour status codified into community constitution until 2035.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═════════════════════════════════════════════════════════════
+     KEYNOTE CONTROLS OVERLAY
+═══════════════════════════════════════════════════════════════ -->
+<div class="deck-controls">
+  <button class="deck-btn" onclick="prevSlide()" title="Previous (Left Arrow)">◀</button>
+  <span class="deck-counter" id="slide-num">01 / 04</span>
+  <button class="deck-btn" onclick="nextSlide()" title="Next (Right Arrow / Space)">▶</button>
+  <span style="color: var(--border-medium);">|</span>
+  <a href="tesla-berlin-good-neighbour-steve-jobs.pptx" download class="deck-btn" style="color: var(--cyan); text-decoration: none;">📥 Download PPTX</a>
+  <button class="deck-btn" onclick="window.print()" style="color: var(--emerald);">🖨️ Print / Save PDF</button>
+  <a href="tesla-berlin-dashboard.html" target="_blank" class="deck-btn" style="color: var(--amber); text-decoration: none;">📊 Live Dashboard</a>
+</div>
+
+<script>
+let curSlide = 1;
+const totalSlides = 4;
+
+function updateSlideView() {
+  for (let i = 1; i <= totalSlides; i++) {
+    const el = document.getElementById('slide-' + i);
+    if (el) {
+      if (i === curSlide) {
+        el.className = 'slide-frame active';
+      } else {
+        el.className = 'slide-frame';
+      }
+    }
+  }
+  document.getElementById('slide-num').textContent = 
+    (curSlide < 10 ? '0' + curSlide : curSlide) + ' / ' + 
+    (totalSlides < 10 ? '0' + totalSlides : totalSlides);
+}
+
+function nextSlide() {
+  if (curSlide < totalSlides) {
+    curSlide++;
+    updateSlideView();
+  }
+}
+
+function prevSlide() {
+  if (curSlide > 1) {
+    curSlide--;
+    updateSlideView();
+  }
+}
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    prevSlide();
+  } else if (e.key === 'Home') {
+    curSlide = 1;
+    updateSlideView();
+  } else if (e.key === 'End') {
+    curSlide = totalSlides;
+    updateSlideView();
+  }
+});
+</script>
+</body>
+</html>

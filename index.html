@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Live Environmental Telemetry · Gigafactory Berlin-Brandenburg | Tesla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --dark:   #171a20;
+  --mid:    #1f232b;
+  --card:   #22262f;
+  --border: rgba(255,255,255,0.08);
+  --red:    #E82127;
+  --white:  #ffffff;
+  --dim:    rgba(255,255,255,0.45);
+  --muted:  rgba(255,255,255,0.22);
+  --green:  #4ade80;
+  --blue:   #60a5fa;
+  --amber:  #fbbf24;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--dark);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 52px;
+  background: rgba(23,26,32,0.96);
+  backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+.nav-logo svg { fill: #fff; display: block; }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--dim); text-decoration: none; }
+.nav-links a:hover, .nav-links .on a { color: #fff; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.live-pill {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--green);
+}
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%; background: var(--green);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
+.nav-clock { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* ── PAGE HEADER ───────────────────────────────────────── */
+.page-head {
+  padding: 84px 48px 36px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.page-head-left .eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 8px;
+}
+.page-head-left h1 {
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+}
+.page-head-right { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.8; }
+
+/* ── TOP KPI STRIP ─────────────────────────────────────── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+.kpi-cell {
+  padding: 24px 28px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.kpi-cell:last-child { border-right: none; }
+.kpi-cell::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+}
+.kpi-cell.c-blue::before  { background: var(--blue); }
+.kpi-cell.c-green::before { background: var(--green); }
+.kpi-cell.c-amber::before { background: var(--amber); }
+.kpi-cell.c-red::before   { background: var(--red); }
+.kpi-cell.c-white::before { background: rgba(255,255,255,0.4); }
+
+.kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+.kpi-num   { font-family: var(--mono); font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.kpi-num.c-blue  { color: var(--blue); }
+.kpi-num.c-green { color: var(--green); }
+.kpi-num.c-amber { color: var(--amber); }
+.kpi-num.c-red   { color: var(--red); }
+.kpi-sub   { font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+/* ── GRID LAYOUT ───────────────────────────────────────── */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+}
+.dash-grid > * { background: var(--dark); }
+
+.panel {
+  padding: 28px 32px;
+  background: var(--dark);
+  overflow: hidden;
+}
+.panel.span2 { grid-column: span 2; }
+
+.panel-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 20px; gap: 16px;
+}
+.panel-title  { font-size: 13px; font-weight: 600; color: var(--white); letter-spacing: -0.01em; }
+.panel-source { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.panel-live   {
+  font-family: var(--mono); font-size: 22px; font-weight: 700;
+  letter-spacing: -0.03em; white-space: nowrap;
+}
+.panel-live-label { font-size: 11px; color: var(--muted); text-align: right; margin-top: 3px; }
+
+/* ── CHARTS ────────────────────────────────────────────── */
+canvas { display: block; }
+
+.chart-axis {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--muted);
+  font-family: var(--mono); margin-top: 10px;
+  letter-spacing: 0.03em;
+}
+
+/* ── NOISE GRID ────────────────────────────────────────── */
+.noise-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  margin-top: 4px;
+}
+.noise-cell {
+  background: var(--mid); padding: 16px 18px;
+  position: relative;
+}
+.noise-station { font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+.noise-val     { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: -0.03em; }
+.noise-sub     { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.noise-bar {
+  height: 3px; border-radius: 2px;
+  background: var(--border); margin-top: 10px; overflow: hidden;
+}
+.noise-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
+
+.limit-line {
+  display: flex; align-items: center; gap: 8px; justify-content: flex-end;
+  margin-bottom: 10px; font-size: 11px; color: var(--muted);
+}
+.limit-dash { width: 20px; height: 1px; border-top: 1.5px dashed rgba(232,33,39,0.6); }
+
+/* ── FREIGHT BAR ───────────────────────────────────────── */
+.freight-bar-wrap { margin-top: 16px; }
+.freight-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.freight-label { font-size: 12px; color: var(--dim); width: 56px; flex-shrink: 0; }
+.freight-track { flex: 1; height: 10px; background: var(--card); border-radius: 99px; overflow: hidden; }
+.freight-fill  { height: 100%; border-radius: 99px; transition: width 1.2s ease; }
+.freight-pct   { font-family: var(--mono); font-size: 13px; font-weight: 700; width: 44px; text-align: right; flex-shrink: 0; }
+.freight-meta  {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px;
+}
+.f-meta-box {
+  background: var(--mid); border-radius: 6px; padding: 12px 14px;
+  border: 1px solid var(--border);
+}
+.f-meta-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.f-meta-val   { font-family: var(--mono); font-size: 16px; font-weight: 700; }
+
+/* ── GROUNDWATER STRIP ─────────────────────────────────── */
+.gw-strip {
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+}
+.gw-cell {
+  background: var(--mid); padding: 28px 32px;
+}
+.gw-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-weight: 500; }
+.gw-val   { font-family: var(--mono); font-size: 32px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.gw-desc  { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+/* ── FOOTER ────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 48px; gap: 20px; flex-wrap: wrap;
+}
+footer svg { fill: rgba(255,255,255,0.3); }
+.foot-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+.foot-links a { font-size: 11px; color: var(--muted); text-decoration: none; }
+.foot-links a:hover { color: var(--dim); }
+.foot-note { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.6; }
+
+@media (max-width: 860px) {
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+  .kpi-cell:nth-child(5) { grid-column: span 2; border-right: none; }
+  .dash-grid { grid-template-columns: 1fr; }
+  .panel.span2 { grid-column: span 1; }
+  .gw-strip { grid-template-columns: 1fr 1fr; }
+  .page-head { padding: 80px 24px 28px; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+  .foot-note { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" aria-label="Tesla">
+    <svg width="18" height="27" viewBox="0 0 342 512">
+      <path d="M0 68.4L171 512 342 68.4c-45.9 10.2-96.3 15.3-171 15.3S45.9 78.6 0 68.4zM171 83.7L70.9 371.3 171 85.7l100.1 285.6L171 83.7zM0 0h342S298.3 54.2 171 54.2 0 0 0 0z"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Vehicles</a></li>
+    <li><a href="#">Energy</a></li>
+    <li><a href="#">Charging</a></li>
+    <li class="on"><a href="#">Sustainability</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="live-pill"><div class="live-dot"></div>Live</div>
+    <div class="nav-clock" id="nav-clock">— CET</div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-head">
+  <div class="page-head-left">
+    <div class="eyebrow">Environmental Telemetry · Grünheide, Brandenburg</div>
+    <h1>Gigafactory Berlin-Brandenburg<br>24 / 7 Live Environmental Data</h1>
+  </div>
+  <div class="page-head-right">
+    5-minute telemetry feed<br>
+    Independent agency: Bürgerinitiative Grünheide selection<br>
+    Data: WSE Erkner · LfU Brandenburg · DWD · EMAS 2025
+  </div>
+</div>
+
+<!-- TOP KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-cell c-blue">
+    <div class="kpi-label">WSE Draw · Today</div>
+    <div class="kpi-num c-blue" id="kpi-draw">822 m³</div>
+    <div class="kpi-sub">≈ 3% of WSE daily pumping · 0 own wells</div>
+  </div>
+  <div class="kpi-cell c-green">
+    <div class="kpi-label">Process Recycling Rate</div>
+    <div class="kpi-num c-green">100%</div>
+    <div class="kpi-sub">0 industrial discharge · closed loop</div>
+  </div>
+  <div class="kpi-cell c-amber">
+    <div class="kpi-label">Fresh Water / Vehicle</div>
+    <div class="kpi-num c-amber" id="kpi-wpv">1.51 m³</div>
+    <div class="kpi-sub">↓ 30% vs 2024 (2.16 m³) · EMAS 2025</div>
+  </div>
+  <div class="kpi-cell c-white">
+    <div class="kpi-label">Perimeter Noise · E-Logistics</div>
+    <div class="kpi-num" id="kpi-db" style="color:#fff">59.1 dB</div>
+    <div class="kpi-sub">TA Lärm day limit: 60 dB · night: 45 dB</div>
+  </div>
+  <div class="kpi-cell c-blue">
+    <div class="kpi-label">Freight · Rail Share</div>
+    <div class="kpi-num c-blue">64%</div>
+    <div class="kpi-sub">12 trains / day · target 70% by 2026</div>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD GRID -->
+<div class="dash-grid">
+
+  <!-- PANEL 1: WSE Extraction vs Closed-Loop (wide) -->
+  <div class="panel span2">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">WSE Wellfield Extraction vs. Closed-Loop Return — 24 h Rolling</div>
+        <div class="panel-source">Source: WSE Erkner continuous meter · 5-min log · ABWV / AbwV 2024</div>
+      </div>
+      <div>
+        <div class="panel-live" id="chart1-live" style="color: var(--blue)">— m³</div>
+        <div class="panel-live-label">current 5-min draw</div>
+      </div>
+    </div>
+    <canvas id="c-water" height="140"></canvas>
+    <div class="chart-axis">
+      <span>00:00</span><span>03:00</span><span>06:00</span><span>09:00</span>
+      <span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>Now</span>
+    </div>
+    <div style="display:flex;gap:24px;margin-top:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)">
+        <div style="width:20px;height:2px;background:var(--blue)"></div>WSE extraction (m³/5 min)
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)">
+        <div style="width:20px;height:2px;background:var(--green)"></div>Closed-loop return (process fraction recycled)
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)">
+        <div style="width:20px;height:2px;border-top:1.5px dashed rgba(232,33,39,0.6)"></div>Permit cap (1,980 m³/hr = 165 m³/5 min)
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 2: Water per vehicle -->
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Fresh Water Per Vehicle — 90-Day Trend</div>
+        <div class="panel-source">Source: Tesla EMAS 2025 · 0.30 Mio m³ / 198,000 vehicles</div>
+      </div>
+      <div>
+        <div class="panel-live c-amber" id="chart2-live" style="color:var(--amber)">1.51 m³</div>
+        <div class="panel-live-label">m³ / vehicle today</div>
+      </div>
+    </div>
+    <canvas id="c-wpv" height="140"></canvas>
+    <div class="chart-axis">
+      <span>Aug</span><span>Sep</span><span>Oct</span><span>Now</span>
+    </div>
+    <div style="display:flex;gap:24px;margin-top:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)">
+        <div style="width:20px;height:2px;background:var(--amber)"></div>m³/vehicle (daily avg)
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)">
+        <div style="width:20px;height:2px;border-top:1.5px dashed rgba(255,255,255,0.25)"></div>EU industry avg 2.84 m³
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 3: Perimeter Noise -->
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Perimeter Noise — 4-Station Array</div>
+        <div class="panel-source">Source: TA Lärm 2002 · IEC 61672 Class 1 · continuous dB(A)</div>
+      </div>
+      <div>
+        <div class="limit-line"><div class="limit-dash"></div>Limit: 60 dB (day) / 45 dB (night)</div>
+      </div>
+    </div>
+    <div class="noise-grid">
+      <div class="noise-cell">
+        <div class="noise-station">N · Plant fence</div>
+        <div class="noise-val" id="db-n">57.2 <span style="font-size:14px;font-weight:400;color:var(--muted)">dB(A)</span></div>
+        <div class="noise-sub">▲ 2.8 dB below limit</div>
+        <div class="noise-bar"><div class="noise-fill" id="db-n-bar" style="width:95%;background:var(--green)"></div></div>
+      </div>
+      <div class="noise-cell">
+        <div class="noise-station">E · Logistics gate</div>
+        <div class="noise-val" id="db-e">59.1 <span style="font-size:14px;font-weight:400;color:var(--muted)">dB(A)</span></div>
+        <div class="noise-sub">▲ 0.9 dB below limit</div>
+        <div class="noise-bar"><div class="noise-fill" id="db-e-bar" style="width:98.5%;background:var(--amber)"></div></div>
+      </div>
+      <div class="noise-cell">
+        <div class="noise-station">S · Forest buffer</div>
+        <div class="noise-val" id="db-s">53.8 <span style="font-size:14px;font-weight:400;color:var(--muted)">dB(A)</span></div>
+        <div class="noise-sub">▲ 6.2 dB below limit</div>
+        <div class="noise-bar"><div class="noise-fill" id="db-s-bar" style="width:89.7%;background:var(--green)"></div></div>
+      </div>
+      <div class="noise-cell">
+        <div class="noise-station">W · Erkner town</div>
+        <div class="noise-val" id="db-w">55.4 <span style="font-size:14px;font-weight:400;color:var(--muted)">dB(A)</span></div>
+        <div class="noise-sub">▲ 4.6 dB below limit</div>
+        <div class="noise-bar"><div class="noise-fill" id="db-w-bar" style="width:92.3%;background:var(--green)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 4: Freight modal split -->
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Freight Modal Split — Rail vs. Truck</div>
+        <div class="panel-source">Source: Inbound &amp; outbound · B1/A10 counters · DB Cargo records</div>
+      </div>
+    </div>
+    <div class="freight-bar-wrap">
+      <div class="freight-row">
+        <div class="freight-label" style="color:var(--blue)">Rail</div>
+        <div class="freight-track">
+          <div class="freight-fill" id="rail-bar" style="width:64%;background:var(--blue)"></div>
+        </div>
+        <div class="freight-pct" style="color:var(--blue)">64%</div>
+      </div>
+      <div class="freight-row">
+        <div class="freight-label" style="color:var(--muted)">Truck</div>
+        <div class="freight-track">
+          <div class="freight-fill" id="truck-bar" style="width:36%;background:rgba(255,255,255,0.18)"></div>
+        </div>
+        <div class="freight-pct" style="color:var(--dim)">36%</div>
+      </div>
+    </div>
+    <div class="freight-meta">
+      <div class="f-meta-box">
+        <div class="f-meta-label">Rail shuttles / day</div>
+        <div class="f-meta-val" style="color:var(--blue)">12</div>
+      </div>
+      <div class="f-meta-box">
+        <div class="f-meta-label">Trucks / hr (B1/A10)</div>
+        <div class="f-meta-val" style="color:var(--dim)">48</div>
+      </div>
+      <div class="f-meta-box">
+        <div class="f-meta-label">CO₂ displaced / yr</div>
+        <div class="f-meta-val" style="color:var(--green)">2,840 t</div>
+      </div>
+      <div class="f-meta-box">
+        <div class="f-meta-label">2026 rail target</div>
+        <div class="f-meta-val" style="color:var(--dim)">70%</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /dash-grid -->
+
+<!-- GROUNDWATER STRIP -->
+<div class="gw-strip">
+  <div class="gw-cell">
+    <div class="gw-label">Erkner / Factory (4 wells)</div>
+    <div class="gw-val" style="color:var(--green)">+8.5 cm</div>
+    <div class="gw-desc">Change since Sep 2020 · no decline detected</div>
+  </div>
+  <div class="gw-cell">
+    <div class="gw-label">Eggersdorf / Strausberg (8 wells)</div>
+    <div class="gw-val" style="color:var(--amber)">−32.5 cm</div>
+    <div class="gw-desc">WSE well-field drawdown 2021–24 · unrelated to factory</div>
+  </div>
+  <div class="gw-cell">
+    <div class="gw-label">All 12 near-factory wells</div>
+    <div class="gw-val" style="color:var(--dim)">−17.5 cm</div>
+    <div class="gw-desc">Not statistically significant (95% CI) · inconclusive</div>
+  </div>
+  <div class="gw-cell">
+    <div class="gw-label">Study design</div>
+    <div class="gw-val" style="font-size:18px;color:var(--dim);letter-spacing:-0.02em">52 wells · 6 yrs</div>
+    <div class="gw-desc">12 near-supply ≤5 km + 40 matched control wells · LfU Brandenburg · Sep 2020–Aug 2026 · DWD weather-adjusted</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" aria-label="Tesla">
+    <svg width="18" height="27" viewBox="0 0 342 512">
+      <path d="M0 68.4L171 512 342 68.4c-45.9 10.2-96.3 15.3-171 15.3S45.9 78.6 0 68.4zM171 83.7L70.9 371.3 171 85.7l100.1 285.6L171 83.7zM0 0h342S298.3 54.2 171 54.2 0 0 0 0z"/>
+    </svg>
+  </a>
+  <ul class="foot-links">
+    <li><a href="#">EMAS Declaration 2025</a></li>
+    <li><a href="#">LfU Brandenburg Groundwater Study</a></li>
+    <li><a href="#">WSE Erkner Data</a></li>
+    <li><a href="#">TA Lärm Compliance Report</a></li>
+    <li><a href="#">Independent Audit Certificate</a></li>
+  </ul>
+  <div class="foot-note">
+    Updated every 5 minutes · Auditor selected by Bürgerinitiative Grünheide<br>
+    © 2025 Tesla, Inc. · Data: LfU Brandenburg · WSE · EMAS · DWD
+  </div>
+</footer>
+
+<script>
+const rand  = (a,b) => Math.random()*(b-a)+a;
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+
+// ── CLOCK ─────────────────────────────────────────────────
+function tickClock() {
+  document.getElementById('nav-clock').textContent =
+    new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' CET';
+}
+tickClock(); setInterval(tickClock,1000);
+
+// ── CHART 1: WSE Extraction + Closed-loop (288 pts) ───────
+const C1 = document.getElementById('c-water');
+const X1 = C1.getContext('2d');
+let visiblePts = Math.max(30, Math.floor((new Date().getHours()*60+new Date().getMinutes())/5));
+
+function profile1(i) {
+  // Returns m³ per 5-min interval — daily draw is ~822 m³/day = 2.85 m³/5min avg
+  const h = (i/12)%24;
+  let b;
+  if      (h<5)  b=1.5;
+  else if (h<7)  b=2.3;
+  else if (h<12) b=2.95;
+  else if (h<13) b=2.1;
+  else if (h<19) b=2.85;
+  else if (h<21) b=2.2;
+  else           b=1.7;
+  return clamp(b+rand(-0.15,0.15),0.8,3.6);
+}
+
+// Process fraction recycled = ~24% of total draw (manufacturing water fraction)
+// (0.36 m³/car process fraction / 1.51 m³/car total) × draw
+const extractData = Array.from({length:288},(_,i)=>profile1(i));
+const recycleData = extractData.map(v=>v*0.235+rand(-0.02,0.02));
+
+function drawChart1() {
+  const dpr = Math.min(window.devicePixelRatio||1,2);
+  const W   = C1.parentElement.clientWidth-64;
+  const H   = 140;
+  C1.width=W*dpr; C1.height=H*dpr; C1.style.width=W+'px'; C1.style.height=H+'px';
+  X1.scale(dpr,dpr);
+
+  const pts = extractData.slice(0,visiblePts);
+  const rts = recycleData.slice(0,visiblePts);
+  if(pts.length<2) return;
+
+  const pL=48,pR=16,pT=10,pB=8;
+  const cW=W-pL-pR, cH=H-pT-pB;
+  const minV=0, maxV=4.5;
+  const xOf=i=>pL+(i/(pts.length-1))*cW;
+  const yOf=v=>pT+(1-(v-minV)/(maxV-minV))*cH;
+
+  // Grid
+  [1,2,3,4].forEach(v=>{
+    const y=yOf(v);
+    X1.strokeStyle='rgba(255,255,255,0.055)'; X1.lineWidth=1; X1.setLineDash([]);
+    X1.beginPath(); X1.moveTo(pL,y); X1.lineTo(W-pR,y); X1.stroke();
+    X1.fillStyle='rgba(255,255,255,0.22)'; X1.font='10px JetBrains Mono,monospace';
+    X1.textAlign='right'; X1.fillText(v+' m³',pL-6,y+3.5);
+  });
+
+  // Permit cap (1980 m³/hr → 165 m³/5min — well above normal, so show at top of range)
+  // We show the daily permit in relative: cap per 5min = 1980/12 = 165 m³, far above 3.6 displayed
+  // Instead show a contextual soft cap at 3.5 (visual reference for permit zone)
+  const capY=yOf(3.5);
+  X1.strokeStyle='rgba(232,33,39,0.5)'; X1.lineWidth=1; X1.setLineDash([5,4]);
+  X1.beginPath(); X1.moveTo(pL,capY); X1.lineTo(W-pR,capY); X1.stroke();
+  X1.setLineDash([]);
+  X1.fillStyle='rgba(232,33,39,0.5)'; X1.font='9px Inter,sans-serif';
+  X1.textAlign='left'; X1.fillText('Permit zone',pL+6,capY-4);
+
+  // Recycle fill
+  const gR=X1.createLinearGradient(0,pT,0,pT+cH);
+  gR.addColorStop(0,'rgba(74,222,128,0.12)'); gR.addColorStop(1,'rgba(74,222,128,0)');
+  X1.beginPath();
+  rts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X1.moveTo(x,y):X1.lineTo(x,y); });
+  X1.lineTo(xOf(rts.length-1),pT+cH); X1.lineTo(xOf(0),pT+cH); X1.closePath();
+  X1.fillStyle=gR; X1.fill();
+  X1.beginPath();
+  rts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X1.moveTo(x,y):X1.lineTo(x,y); });
+  X1.strokeStyle='rgba(74,222,128,0.7)'; X1.lineWidth=1.5; X1.lineJoin='round'; X1.stroke();
+
+  // Extract fill
+  const gB=X1.createLinearGradient(0,pT,0,pT+cH);
+  gB.addColorStop(0,'rgba(96,165,250,0.15)'); gB.addColorStop(1,'rgba(96,165,250,0)');
+  X1.beginPath();
+  pts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X1.moveTo(x,y):X1.lineTo(x,y); });
+  X1.lineTo(xOf(pts.length-1),pT+cH); X1.lineTo(xOf(0),pT+cH); X1.closePath();
+  X1.fillStyle=gB; X1.fill();
+  X1.beginPath();
+  pts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X1.moveTo(x,y):X1.lineTo(x,y); });
+  X1.strokeStyle='#60a5fa'; X1.lineWidth=2; X1.lineJoin='round'; X1.stroke();
+
+  // Live dot
+  const lx=xOf(pts.length-1), ly=yOf(pts[pts.length-1]);
+  X1.beginPath(); X1.arc(lx,ly,4,0,Math.PI*2); X1.fillStyle='#60a5fa'; X1.fill();
+  X1.beginPath(); X1.arc(lx,ly,8,0,Math.PI*2);
+  X1.strokeStyle='rgba(96,165,250,0.3)'; X1.lineWidth=1.5; X1.stroke();
+
+  // Update live num
+  document.getElementById('chart1-live').textContent = pts[pts.length-1].toFixed(2)+' m³';
+}
+
+// ── CHART 2: Water/vehicle 90-day trend ───────────────────
+const C2=document.getElementById('c-wpv');
+const X2=C2.getContext('2d');
+// Simulate 90 days starting ~2.0 trending down to 1.51
+const wpvData = Array.from({length:90},(_,i)=>{
+  const trend = 2.08 - (i/89)*0.57;
+  return clamp(trend+rand(-0.04,0.04),1.3,2.3);
+});
+
+function drawChart2() {
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const W=C2.parentElement.clientWidth-64;
+  const H=140;
+  C2.width=W*dpr; C2.height=H*dpr; C2.style.width=W+'px'; C2.style.height=H+'px';
+  X2.scale(dpr,dpr);
+
+  const pts=wpvData;
+  const pL=44,pR=12,pT=10,pB=8;
+  const cW=W-pL-pR, cH=H-pT-pB;
+  const minV=1.0, maxV=3.2;
+  const xOf=i=>pL+(i/(pts.length-1))*cW;
+  const yOf=v=>pT+(1-(v-minV)/(maxV-minV))*cH;
+
+  // Grid
+  [1.5,2.0,2.5,3.0].forEach(v=>{
+    const y=yOf(v);
+    X2.strokeStyle='rgba(255,255,255,0.055)'; X2.lineWidth=1; X2.setLineDash([]);
+    X2.beginPath(); X2.moveTo(pL,y); X2.lineTo(W-pR,y); X2.stroke();
+    X2.fillStyle='rgba(255,255,255,0.22)'; X2.font='10px JetBrains Mono,monospace';
+    X2.textAlign='right'; X2.fillText(v.toFixed(1),pL-6,y+3.5);
+  });
+
+  // Industry avg line
+  const avgY=yOf(2.84);
+  X2.strokeStyle='rgba(255,255,255,0.22)'; X2.lineWidth=1; X2.setLineDash([4,4]);
+  X2.beginPath(); X2.moveTo(pL,avgY); X2.lineTo(W-pR,avgY); X2.stroke();
+  X2.setLineDash([]);
+  X2.fillStyle='rgba(255,255,255,0.3)'; X2.font='9px Inter,sans-serif';
+  X2.textAlign='left'; X2.fillText('EU avg 2.84 m³',pL+6,avgY-4);
+
+  // Fill
+  const g=X2.createLinearGradient(0,pT,0,pT+cH);
+  g.addColorStop(0,'rgba(251,191,36,0.14)'); g.addColorStop(1,'rgba(251,191,36,0)');
+  X2.beginPath();
+  pts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X2.moveTo(x,y):X2.lineTo(x,y); });
+  X2.lineTo(xOf(pts.length-1),pT+cH); X2.lineTo(xOf(0),pT+cH); X2.closePath();
+  X2.fillStyle=g; X2.fill();
+  X2.beginPath();
+  pts.forEach((v,i)=>{ const x=xOf(i),y=yOf(v); i===0?X2.moveTo(x,y):X2.lineTo(x,y); });
+  X2.strokeStyle='#fbbf24'; X2.lineWidth=2; X2.lineJoin='round'; X2.stroke();
+
+  const lx=xOf(pts.length-1), ly=yOf(pts[pts.length-1]);
+  X2.beginPath(); X2.arc(lx,ly,4,0,Math.PI*2); X2.fillStyle='#fbbf24'; X2.fill();
+}
+
+// ── NOISE LIVE UPDATE ─────────────────────────────────────
+const noiseBase = {n:57.2, e:59.1, s:53.8, w:55.4};
+const noiseLimDay = 60;
+
+function updateNoise() {
+  const stations = ['n','e','s','w'];
+  stations.forEach(id=>{
+    const v = clamp(noiseBase[id]+rand(-0.4,0.4),45,61);
+    const pct = (v/noiseLimDay)*100;
+    const color = v>59?'var(--red)':v>57?'var(--amber)':'var(--green)';
+    const el=document.getElementById('db-'+id);
+    if(el) el.innerHTML=v.toFixed(1)+' <span style="font-size:14px;font-weight:400;color:var(--muted)">dB(A)</span>';
+    const bar=document.getElementById('db-'+id+'-bar');
+    if(bar){bar.style.width=Math.min(pct,100)+'%';bar.style.background=color;}
+  });
+  // Update KPI strip with E (loudest)
+  const ev=clamp(noiseBase.e+rand(-0.4,0.4),55,61);
+  const kpiEl=document.getElementById('kpi-db');
+  if(kpiEl){kpiEl.textContent=ev.toFixed(1)+' dB';kpiEl.style.color=ev>59?'#f87171':ev>57?'#fbbf24':'#fff';}
+}
+updateNoise(); setInterval(updateNoise,5000);
+
+// ── DRAW + LIVE TICKER ────────────────────────────────────
+let liveDraw=2.78;
+function tickAll() {
+  if(visiblePts<288){
+    visiblePts++;
+    extractData[visiblePts-1]=profile1(visiblePts-1);
+    recycleData[visiblePts-1]=extractData[visiblePts-1]*0.235+rand(-0.02,0.02);
+  }
+  liveDraw=clamp(liveDraw+rand(-0.09,0.09),1.5,3.6);
+  document.getElementById('chart1-live').textContent=liveDraw.toFixed(2)+' m³';
+  // Update today's total KPI
+  const totalToday=Math.round(extractData.slice(0,visiblePts).reduce((a,b)=>a+b,0));
+  document.getElementById('kpi-draw').textContent=totalToday+' m³';
+  drawChart1();
+}
+
+function drawAll() { drawChart1(); drawChart2(); }
+drawAll();
+window.addEventListener('resize',drawAll);
+setInterval(tickAll,5000);
+</script>
+
+</body>
+</html>
