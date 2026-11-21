@@ -1,85 +1,56 @@
 # Gigafactory Berlin-Brandenburg · 24/7 Live Environmental Telemetry
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen)](https://github.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen)](https://joeciyona4537-svg.github.io/CCC/)
 [![Status](https://img.shields.io/badge/Stream-Active%205--Min%20Feed-blue)](#)
 [![Compliance](https://img.shields.io/badge/Compliance%20Streak-342%20Days-emerald)](#)
-[![Auditor](https://img.shields.io/badge/Auditor-Bürgerinitiative%20Selected-purple)](#)
+[![Watchdog](https://img.shields.io/badge/Watchdog-Bürgerinitiative%20Selected-purple)](#)
 
-> **Public Environmental Telemetry & Civic Transparency Initiative for Grünheide until 2035.**  
-> Streaming real-time groundwater extraction vs. closed-loop recycling rates, water per car, perimeter decibels, and truck-vs.-rail freight splits to replace speculation with unedited facts.
+> **24/7 Live Environmental Telemetry & Civic Transparency Dashboard for Grünheide.**  
+> Streaming real-time groundwater extraction vs. closed-loop recycling rates, fresh water intensity per car, 8-sensor perimeter acoustic radar, and continuous compliance logs.
 
 ---
 
 ## 📌 Executive Summary
 
-Following community concerns in Grünheide and the initial citizen referendum (65% rejection of expansion plans), this platform establishes a **permanent, cryptographic, 24/7 radical transparency pipeline** for Tesla Gigafactory Berlin-Brandenburg (GF4).
-
-Designed with Tesla's official design language (`#171a20` Obsidian, `#ffffff` White, `#E82127` Red) and built to empower residents, municipal delegates, and environmental watchdogs with unedited, real-time telemetry.
+This platform establishes a **permanent, cryptographic, 24/7 radical transparency pipeline** for Tesla Gigafactory Berlin-Brandenburg (GF4). Designed with Tesla's official design language (`#171a20` Obsidian, `#ffffff` White, `#E82127` Red) and built to empower residents, municipal delegates, and environmental watchdogs with unedited, real-time telemetry.
 
 ---
 
-## 📊 Live Telemetry Metrics
+## 📊 Live Telemetry Focus Metrics
 
 | Metric | Current Reading | Legal / Operational Limit | Data Source |
 | :--- | :--- | :--- | :--- |
 | **WSE Water Draw (Daily)** | **~822 m³/day** (~3% of WSE capacity) | 1,980 m³/hr permit cap | WSE Erkner continuous flow meter |
 | **Private Extraction Wells** | **0 Own Wells** | 0 allowed | Municipal public mains only |
 | **Manufacturing Recycling Rate** | **100% Process Recycled** | 0 industrial wastewater discharge | Closed-loop circular distillation |
-| **Water Intensity per Vehicle** | **1.51 m³ / car** (↓ 30% YoY from 2.16) | EU Industry Avg: 2.84 m³ | EMAS 2025 Audit (11k worker sanitary included) |
-| **Perimeter Noise (E-Logistics)** | **59.1 dB(A)** | TA Lärm Day: 60 dB / Night: 45 dB | 4-Station IEC 61672 Class 1 acoustic array |
+| **Water Intensity per Vehicle** | **1.51 m³ / car** (↓ 30% YoY from 2.16) | EU Industry Avg: 2.84 m³ | EMAS 2025 Audit (1.15 m³ sanitary/cooling + 0.36 m³ process) |
+| **Perimeter Noise (E-Gate)** | **58.9 dB(A)** | TA Lärm Day: 60 dB / Night: 45 dB | 8-Sensor IEC 61672 Class 1 acoustic radar array |
 | **Groundwater Table (Erkner / GF4)**| **+8.5 cm** net gain | Pre-2020 baseline comparison | LfU Brandenburg 52-well, 6-year study |
-| **Freight Modal Split** | **64% Rail** (12 train shuttles/day) | 2026 Target: 70% Rail | DB Cargo / B1-A10 highway sensors |
 
 ---
 
-## 🏛 The 3 Pillars of Civic Co-Governance (2025–2035)
+## 🔍 Core Dashboard Components
 
-1. **The Glass Pipeline (24/7 Live Telemetry):**
-   Continuous sensor feed streaming real-time water draw, closed-loop recycling, decibel radars, and rail freight splits to every resident's smartphone.
-2. **The Citizen's Watchdog (Resident-Chosen Independent Agency):**
-   The auditing firm is tendered, selected, and contracted exclusively by Bürgerinitiative Grünheide and municipality delegates. Tesla pre-funds an irrevocable 5-year bank escrow trust with **zero corporate veto power**.
-3. **Proof in Every Mailbox (Physical Quarterly Audits):**
-   Up to 4 random unannounced citizen-led sampling inspections per year, plus an unedited 1-page plain-German physical report mailed quarterly to all **9,200 households** in Grünheide and Fangschleuse.
+1. **WSE Wellfield Extraction vs. Closed-Loop Return (24h Rolling):**
+   Continuous 5-minute telemetry comparing public utility extraction against internal closed-loop recycling volume, with soft permit threshold markers.
+2. **Fresh Water per Vehicle (90-Day Trend & Daily Breakdown):**
+   Trajectory showing efficiency gains from 2.16 m³ down to 1.51 m³/car (vs EU 2.84 m³ benchmark), with daily sanitary & cooling staff split (1.15 m³) vs process recycling (0.36 m³).
+3. **Perimeter Acoustic Telemetry (8-Sensor Radar & 24h Timeline):**
+   Full circular acoustic radar polygon covering 8 compass directions (N, NE, E, SE, S, SW, W, NW) alongside a 24-hour continuous decibel timeline tracking the 60 dB TA Lärm legal boundary.
+4. **Groundwater & Civic Verification:**
+   Direct empirical data from the LfU Brandenburg 52-well study (+8.5 cm Erkner wells) and independent audit verification by Bürgerinitiative Grünheide delegates.
 
 ---
 
 ## 📂 Repository Contents
 
-* `index.html` / `tesla-berlin-dashboard.html`: The 24/7 live environmental telemetry dashboard (ready for GitHub Pages).
+* `index.html` / `tesla-berlin-dashboard.html`: The compact 24/7 live telemetry dashboard (ready for GitHub Pages).
 * `presentation.html`: Ultra-clean Steve Jobs-style 4-slide interactive keynote.
 * `presentation.pptx`: Native PowerPoint deck for stakeholder presentations.
-* `dashboard_snip.png`: High-definition render of the live telemetry telemetry stream.
+* `dashboard_snip.png`: High-definition render of the live telemetry stream.
 
 ---
 
-## 🚀 Quick Start / Local Deployment
-
-To run locally:
-```bash
-# Clone the repository
-git clone https://github.com/<your-username>/tesla-berlin-telemetry.git
-cd tesla-berlin-telemetry
-
-# Start local server
-python3 -m http.server 8088
-
-# Open in browser
-open http://localhost:8088/index.html
-```
-
----
-
-## 🌐 Deploying to GitHub Pages
-
-1. Push this repository to GitHub.
-2. Go to **Settings** → **Pages**.
-3. Under **Branch**, select `main` and root (`/`), then click **Save**.
-4. Your live dashboard is instantly online at: `https://<your-username>.github.io/<repo-name>/`
-
----
-
-## 📜 Verified Data Sources
-* **Groundwater Study:** Landesamt für Umwelt (LfU) Brandenburg (APW & GEMS-GER databases).
-* **Weather & Precipitation Baseline:** Deutscher Wetterdienst (DWD).
-* **Factory Water Audit:** Tesla Gigafactory Berlin EMAS Environmental Statement 2025.
-* **Public Utility Extraction:** Wasserverband Strausberg-Erkner (WSE).
+## 🌐 Live GitHub Pages Link
+The live dashboard is hosted at:  
+👉 **[https://joeciyona4537-svg.github.io/CCC/](https://joeciyona4537-svg.github.io/CCC/)**
