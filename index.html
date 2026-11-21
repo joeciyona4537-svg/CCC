@@ -130,6 +130,64 @@ nav {
   font-size: 12px; font-weight: 600; color: var(--text-dim);
   text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px;
 }
+/* ── LIVE TRACKER HEADERS & METRICS ─────────────────────── */
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.tracker-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.tracker-status {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-blue  { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(2, 132, 199, 0.25); }
+.status-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+.status-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(217, 119, 6, 0.25); }
+
+.card-hero-num .unit {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: -0.01em;
+}
+.tracker-rate {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.tracker-rate strong {
+  color: var(--text-dark);
+}
+.tracker-footer-pill {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+.tracker-footer-pill strong {
+  color: var(--text-dark);
+}
 .card-hero-num {
   font-family: var(--mono); font-size: 44px; font-weight: 700;
   letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px;
@@ -349,47 +407,57 @@ footer {
 
   <!-- HERO INTRO -->
   <div class="hero-header">
-    <div class="hero-eyebrow">Water Resources &amp; Environmental Telemetry</div>
-    <h1 class="hero-title">Clear, unedited water facts.<br>In real time.</h1>
-    <p class="hero-sub">Direct sensor telemetry from Gigafactory Berlin-Brandenburg, independently audited and verified for the community of Grünheide.</p>
+    <div class="hero-eyebrow">Gigafactory Berlin-Brandenburg · Water Resources</div>
+    <h1 class="hero-title">24/7 Environmental Telemetry &amp; Water Tracker</h1>
+    <p class="hero-sub">Continuous live sensor feeds from WSE Erkner municipal delivery meters and LfU state monitoring wells.</p>
   </div>
 
-  <!-- 3 BIG QUESTIONS ANSWERED VISUALLY -->
+  <!-- 3 LIVE TELEMETRY CHANNELS -->
   <div class="hero-grid">
 
-    <!-- CARD 1 -->
+    <!-- TRACKER 01: MUNICIPAL INTAKE & EXTRACTION -->
     <div class="hero-card c-blue">
       <div>
-        <div class="card-question">Are they taking our groundwater?</div>
-        <div class="card-hero-num c-blue">0</div>
-        <div class="card-hero-label">Own Wells Operated</div>
-        <div class="card-hero-desc">Tesla has zero private extraction wells. 100% of water comes from the public WSE municipal mains — representing only ~3% of municipal utility pumping.</div>
+        <div class="tracker-header">
+          <span class="tracker-tag">CHANNEL 01 · UTILITY INTAKE</span>
+          <span class="tracker-status status-blue">● STREAM ACTIVE</span>
+        </div>
+        <div class="card-hero-num c-blue" id="tracker-wse-num">822 <span class="unit">m³</span></div>
+        <div class="card-hero-label">Today's Cumulative Draw</div>
+        <div class="tracker-rate">Live Flow: <strong id="tracker-flow-rate">2.85 m³ / 5-min</strong> (~3% of WSE supply)</div>
       </div>
-      <div class="bench-bar-wrap">
-        <div style="font-size: 11px; font-weight: 600; color: var(--blue);">● 100% Public Supply · Zero Private Pumping</div>
+      <div class="tracker-footer-pill">
+        <span>Public Supply: <strong>100%</strong></span>
+        <span>Own Wells: <strong>0 Operated</strong></span>
       </div>
     </div>
 
-    <!-- CARD 2 -->
+    <!-- TRACKER 02: PROCESS RECYCLING -->
     <div class="hero-card c-green">
       <div>
-        <div class="card-question">Is factory water dumped into sewers?</div>
-        <div class="card-hero-num c-green">100%</div>
-        <div class="card-hero-label">Process Water Recycled</div>
-        <div class="card-hero-desc">Every drop of manufacturing water is treated and circulated in an internal closed loop. Zero industrial process wastewater leaves the factory site.</div>
+        <div class="tracker-header">
+          <span class="tracker-tag">CHANNEL 02 · CLOSED-LOOP RECYCLING</span>
+          <span class="tracker-status status-green">● ZERO DISCHARGE</span>
+        </div>
+        <div class="card-hero-num c-green">100.0 <span class="unit">%</span></div>
+        <div class="card-hero-label">Manufacturing Water Recycled</div>
+        <div class="tracker-rate">Internal Distillation: <strong style="color:var(--green)">100% Closed Loop</strong></div>
       </div>
-      <div class="bench-bar-wrap">
-        <div style="font-size: 11px; font-weight: 600; color: var(--green);">● Closed-Loop Distillation · 0 Process Effluent</div>
+      <div class="tracker-footer-pill">
+        <span>Process Sewer Effluent: <strong>0 Liters</strong></span>
       </div>
     </div>
 
-    <!-- CARD 3 -->
+    <!-- TRACKER 03: EFFICIENCY INTENSITY -->
     <div class="hero-card c-amber">
       <div>
-        <div class="card-question">How efficient is the factory?</div>
-        <div class="card-hero-num c-amber">1.51 m³</div>
-        <div class="card-hero-label">Fresh Water per Car Built</div>
-        <div class="card-hero-desc">Down 30% year-over-year (from 2.16 m³ in 2024). Nearly half the European automotive industry average.</div>
+        <div class="tracker-header">
+          <span class="tracker-tag">CHANNEL 03 · SPECIFIC CONSUMPTION</span>
+          <span class="tracker-status status-amber">● EMAS AUDITED</span>
+        </div>
+        <div class="card-hero-num c-amber">1.51 <span class="unit">m³ / car</span></div>
+        <div class="card-hero-label">Fresh Water per Vehicle Built</div>
+        <div class="tracker-rate">YoY Improvement: <strong style="color:var(--green)">−30.1%</strong> vs 2024 (2.16 m³)</div>
       </div>
       <div class="bench-bar-wrap">
         <div class="bench-row">
@@ -398,7 +466,7 @@ footer {
         </div>
         <div class="bench-track"><div class="bench-fill-tesla"></div></div>
         <div class="bench-row">
-          <span style="color: var(--text-dim);">European Industry Avg</span>
+          <span style="color: var(--text-dim);">EU Industry Benchmark</span>
           <span>2.84 m³</span>
         </div>
         <div class="bench-track"><div class="bench-fill-eu"></div></div>
@@ -700,6 +768,8 @@ function drawChart1() {
 
   const curRate = pts[pts.length - 1];
   document.getElementById('chart-live-val').textContent = curRate.toFixed(2) + ' m³';
+  const flowEl = document.getElementById('tracker-flow-rate');
+  if (flowEl) flowEl.textContent = curRate.toFixed(2) + ' m³ / 5-min';
 }
 
 function tickAll() {
@@ -711,6 +781,8 @@ function tickAll() {
 
   const totalToday = Math.round(extractData.slice(0, visiblePts).reduce((a, b) => a + b, 0));
   document.getElementById('chart-total-val').textContent = totalToday + ' m³';
+  const wseEl = document.getElementById('tracker-wse-num');
+  if (wseEl) wseEl.innerHTML = totalToday + ' <span class="unit">m³</span>';
   drawChart1();
 }
 
